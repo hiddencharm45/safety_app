@@ -1,13 +1,13 @@
 //it is a tabs screen basically
 import 'package:flutter/material.dart';
 import 'package:safety_app/ui/screens/notification_screen.dart';
-import 'package:safety_app/ui/widgets/clipshape_sos.dart';
+//import 'package:safety_app/ui/widgets/clipshape_sos.dart';
 import 'home_screen.dart';
 //import 'package:safety_app/ui/signin.dart';
 import 'contacts_screen.dart';
 import 'user_profile.dart';
 
-import '../widgets/responsive_ui.dart';
+//import '../widgets/responsive_ui.dart';
 
 //import '../ui/widgets/textformfield.dart';
 class Dashboard extends StatefulWidget {
@@ -38,19 +38,19 @@ class _DashboardState extends State<Dashboard> {
 
   bool checkBoxValue = false;
   var _body;
-  double _height;
-  double _width;
-  double _pixelRatio;
-  bool _large;
-  bool _medium;
+  //double _height;
+  //double _width;
+  //double _pixelRatio;
+  //bool _large;
+  //bool _medium;
   @override
   Widget build(BuildContext context) {
     _body = _pages[_selectedPageIndex]['page'];
-    _height = MediaQuery.of(context).size.height;
-    _width = MediaQuery.of(context).size.width;
-    _pixelRatio = MediaQuery.of(context).devicePixelRatio;
-    _large = ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
-    _medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
+    //_height = MediaQuery.of(context).size.height;
+    //_width = MediaQuery.of(context).size.width;
+    //_pixelRatio = MediaQuery.of(context).devicePixelRatio;
+    //_large = ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
+    //_medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
 
     return Scaffold(
       body: _body,
@@ -73,7 +73,7 @@ class _DashboardState extends State<Dashboard> {
               size: 30,
             ),
 
-            title: Text('Home'),
+            label: 'Home',
           ),
           BottomNavigationBarItem(
             //backgroundColor: Theme.of(context).primaryColor,
@@ -82,7 +82,7 @@ class _DashboardState extends State<Dashboard> {
               Icons.phone,
               size: 30,
             ),
-            title: Text('Contacts'),
+            label: 'Contacts',
           ),
           BottomNavigationBarItem(
             //backgroundColor: Colors.pink[400],
@@ -90,9 +90,7 @@ class _DashboardState extends State<Dashboard> {
               Icons.person,
               size: 30,
             ),
-            title: Text(
-              'Profile',
-            ),
+            label: 'Profile',
           ),
           BottomNavigationBarItem(
             //backgroundColor: Colors.pink[400],
@@ -100,9 +98,7 @@ class _DashboardState extends State<Dashboard> {
               Icons.notification_important_rounded,
               size: 30,
             ),
-            title: Text(
-              'Notification',
-            ),
+            label: 'Notification',
           ),
         ],
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:safety_app/ui/model/news.dart';
-import '../screens/home_screen.dart';
+//import 'package:safety_app/ui/model/news.dart';
+//import '../screens/home_screen.dart';
 
 class NewsItem extends StatelessWidget {
   final title;

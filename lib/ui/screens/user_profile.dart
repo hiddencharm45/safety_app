@@ -1,6 +1,6 @@
 //it is a tabs screen basically
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
+//import 'package:flutter/gestures.dart';
 //import 'package:safety_app/ui/signin.dart';
 import '../widgets/clipshape_sos.dart';
 
@@ -14,7 +14,7 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
-  final _form = GlobalKey<FormState>();
+  //final _form = GlobalKey<FormState>();
   bool _privacyMode = false;
   bool checkBoxValue = false;
   double _height;
