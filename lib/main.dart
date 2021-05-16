@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: "Login",
         theme: ThemeData(
-          primaryColor: Colors.orange[200],
+          primaryColor: Colors.blue[200],
           //accentColor:
         ),
 

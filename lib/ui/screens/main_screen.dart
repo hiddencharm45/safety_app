@@ -8,8 +8,8 @@ import 'contacts_screen.dart';
 import 'user_profile.dart';
 
 //import '../widgets/responsive_ui.dart';
-
 //import '../ui/widgets/textformfield.dart';
+
 class Dashboard extends StatefulWidget {
   static const routeName = '/dashboard';
   @override
@@ -30,6 +30,7 @@ class _DashboardState extends State<Dashboard> {
   }
 
   int _selectedPageIndex = 0;
+
   void _selectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
@@ -58,13 +59,14 @@ class _DashboardState extends State<Dashboard> {
         onTap: _selectPage,
 
         unselectedItemColor: Colors.black,
-        selectedItemColor: Colors.pink,
+        selectedItemColor: Colors.blue,
 
         currentIndex: _selectedPageIndex,
 
         //it tells that which item is selected
         type: BottomNavigationBarType
             .fixed, //will add a transition and remove bgcolor as well
+
         items: [
           BottomNavigationBarItem(
             //backgroundColor: Colors.pink[400],
@@ -72,7 +74,6 @@ class _DashboardState extends State<Dashboard> {
               Icons.home_rounded,
               size: 30,
             ),
-
             label: 'Home',
           ),
           BottomNavigationBarItem(
