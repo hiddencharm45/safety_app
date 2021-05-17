@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:safety_app/ui/screens/main_screen.dart';
+import 'package:safety_app/ui/screens/dashboard.dart';
 import 'package:safety_app/ui/screens/signup.dart';
 //import 'package:safety_app/ui/test.dart';
-
 import '../widgets/custom_shape.dart';
 import '../widgets/responsive_ui.dart';
 import '../widgets/textformfield.dart';
 
 class SignInPage extends StatelessWidget {
+  //final _formKey = GlobalKey<FormState>();
   static const routeName = '/signin';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +29,7 @@ class _SignInScreenState extends State<SignInScreen> {
   double _pixelRatio;
   bool _large;
   bool _medium;
+  TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   GlobalKey<FormState> _key = GlobalKey();
@@ -48,13 +50,13 @@ class _SignInScreenState extends State<SignInScreen> {
           child: Column(
             children: <Widget>[
               clipShape(),
-              welcomeTextRow(),
-              signInTextRow(),
-              form(),
-              forgetPassTextRow(),
+              //welcomeTextRow(),
+              //signInTextRow(),
+              //form(),
+              //forgetPassTextRow(),
               SizedBox(height: _height / 12),
               button(),
-              signUpTextRow(),
+              //signUpTextRow(),
             ],
           ),
         ),
@@ -156,12 +158,22 @@ class _SignInScreenState extends State<SignInScreen> {
         key: _key,
         child: Column(
           children: <Widget>[
-            emailTextFormField(),
+            //emailTextFormField(),
+            phoneTextFormField(),
             SizedBox(height: _height / 40.0),
-            passwordTextFormField(),
+            //passwordTextFormField(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget phoneTextFormField() {
+    return CustomTextField(
+      keyboardType: TextInputType.phone,
+      textEditingController: emailController,
+      icon: Icons.phone,
+      hint: "Enter phone number",
     );
   }
 

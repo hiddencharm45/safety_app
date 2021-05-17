@@ -1,8 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:safety_app/ui/screens/signin.dart';
+import 'package:safety_app/ui/screens/welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   static const routeName = '/splashscreen';
@@ -19,8 +18,8 @@ class SplashScreenState extends State<SplashScreen>
 
   startTime() async {
     var _duration = new Duration(seconds: 5);
-    return new Timer(_duration,
-        navigationPage); //takes duration for which timer will be on, and then what would be displayed if time completed
+    return new Timer(_duration, navigationPage);
+    //takes duration for which timer will be on, and then what would be displayed if time completed
   }
 
   void navigationPage() {
