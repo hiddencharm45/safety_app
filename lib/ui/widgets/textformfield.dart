@@ -7,10 +7,10 @@ class CustomTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final bool obscureText;
   final IconData icon;
-  double _width;
-  double _pixelRatio;
-  bool large;
-  bool medium;
+  // double _width;
+  // double _pixelRatio;
+  // bool large;
+  // bool medium;
 
   CustomTextField({
     this.hint,
@@ -22,10 +22,10 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _width = MediaQuery.of(context).size.width;
-    _pixelRatio = MediaQuery.of(context).devicePixelRatio;
-    large = ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
-    medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
+    var _width = MediaQuery.of(context).size.width;
+    var _pixelRatio = MediaQuery.of(context).devicePixelRatio;
+    var large = ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
+    var medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
     return Material(
       borderRadius: BorderRadius.circular(30.0),
       elevation: large ? 12 : (medium ? 10 : 8),

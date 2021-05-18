@@ -1,7 +1,7 @@
 //it is a tabs screen basically
 import 'package:flutter/material.dart';
 import 'package:safety_app/ui/screens/notification_screen.dart';
-import 'package:safety_app/ui/widgets/clipshape_sos.dart';
+// import 'package:safety_app/ui/widgets/clipshape_sos.dart';
 import 'home_screen.dart';
 //import 'package:safety_app/ui/signin.dart';
 import 'contacts_screen.dart';

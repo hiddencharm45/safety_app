@@ -1,6 +1,6 @@
 //it is a tabs screen basically
 import 'package:flutter/material.dart';
-import '../model/contacts.dart';
+// import '../model/contacts.dart';
 //import 'package:safety_app/ui/signin.dart';
 import '../widgets/clipshape_sos.dart';
 import 'package:provider/provider.dart';
