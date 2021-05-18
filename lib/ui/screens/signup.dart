@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:safety_app/ui/screens/signin.dart';
+import 'package:safety_app/ui/screens/welcome_screen.dart';
 
 import '../widgets/custom_shape.dart';
 import '../widgets/customappbar.dart';

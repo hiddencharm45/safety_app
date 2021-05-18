@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:safety_app/ui/screens/main_screen.dart';
+import 'package:safety_app/ui/screens/otp_screen.dart';
 import 'package:safety_app/ui/screens/signup.dart';
 //import 'package:safety_app/ui/test.dart';
-
 import '../widgets/custom_shape.dart';
 import '../widgets/responsive_ui.dart';
 import '../widgets/textformfield.dart';
 
 class SignInPage extends StatelessWidget {
+  //final _formKey = GlobalKey<FormState>();
   static const routeName = '/signin';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +29,7 @@ class _SignInScreenState extends State<SignInScreen> {
   double _pixelRatio;
   bool _large;
   bool _medium;
+  TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   GlobalKey<FormState> _key = GlobalKey();
@@ -48,17 +50,44 @@ class _SignInScreenState extends State<SignInScreen> {
           child: Column(
             children: <Widget>[
               clipShape(),
-              welcomeTextRow(),
-              signInTextRow(),
+              //welcomeTextRow(),
+              //signInTextRow(),
               form(),
-              forgetPassTextRow(),
+              //forgetPassTextRow(),
               SizedBox(height: _height / 12),
               button(),
-              signUpTextRow(),
+              //signUpTextRow(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget form() {
+    return Container(
+      margin: EdgeInsets.only(
+          left: _width / 12.0, right: _width / 12.0, top: _height / 15.0),
+      child: Form(
+        key: _key,
+        child: Column(
+          children: <Widget>[
+            //emailTextFormField(),
+            phoneTextFormField(),
+            SizedBox(height: _height / 40.0),
+            //passwordTextFormField(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget phoneTextFormField() {
+    return CustomTextField(
+      keyboardType: TextInputType.phone,
+      textEditingController: phoneController,
+      icon: Icons.phone_android,
+      hint: "Enter phone number",
     );
   }
 
@@ -114,6 +143,34 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
+  Widget button() {
+    return RaisedButton(
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+      onPressed: () {
+        Navigator.of(context).pushReplacementNamed(OtpScreen.routeName);
+        print("Routing to your account");
+        Scaffold.of(context)
+            .showSnackBar(SnackBar(content: Text('Login Successful')));
+      },
+      textColor: Colors.white,
+      padding: EdgeInsets.all(0.0),
+      child: Container(
+        alignment: Alignment.center,
+        width: _large ? _width / 4 : (_medium ? _width / 3.75 : _width / 3.5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+          gradient: LinearGradient(
+            colors: <Color>[Colors.orange[200], Colors.pinkAccent],
+          ),
+        ),
+        padding: const EdgeInsets.all(12.0),
+        child: Text('SIGN IN',
+            style: TextStyle(fontSize: _large ? 14 : (_medium ? 12 : 10))),
+      ),
+    );
+  }
+
   Widget welcomeTextRow() {
     return Container(
       margin: EdgeInsets.only(left: _width / 20, top: _height / 100),
@@ -144,23 +201,6 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget form() {
-    return Container(
-      margin: EdgeInsets.only(
-          left: _width / 12.0, right: _width / 12.0, top: _height / 15.0),
-      child: Form(
-        key: _key,
-        child: Column(
-          children: <Widget>[
-            emailTextFormField(),
-            SizedBox(height: _height / 40.0),
-            passwordTextFormField(),
-          ],
-        ),
       ),
     );
   }
@@ -212,34 +252,6 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
           )
         ],
-      ),
-    );
-  }
-
-  Widget button() {
-    return RaisedButton(
-      elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      onPressed: () {
-        Navigator.of(context).pushReplacementNamed(Dashboard.routeName);
-        print("Routing to your account");
-        Scaffold.of(context)
-            .showSnackBar(SnackBar(content: Text('Login Successful')));
-      },
-      textColor: Colors.white,
-      padding: EdgeInsets.all(0.0),
-      child: Container(
-        alignment: Alignment.center,
-        width: _large ? _width / 4 : (_medium ? _width / 3.75 : _width / 3.5),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-          gradient: LinearGradient(
-            colors: <Color>[Colors.orange[200], Colors.pinkAccent],
-          ),
-        ),
-        padding: const EdgeInsets.all(12.0),
-        child: Text('SIGN IN',
-            style: TextStyle(fontSize: _large ? 14 : (_medium ? 12 : 10))),
       ),
     );
   }
