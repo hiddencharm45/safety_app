@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:safety_app/ui/screens/welcome_screen.dart';
-
 import '../widgets/custom_shape.dart';
 import '../widgets/customappbar.dart';
 import '../widgets/responsive_ui.dart';
@@ -46,7 +45,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 button(),
                 infoTextRow(),
-                socialIconsRow(),
+                //socialIconsRow(),
                 //signInTextRow(),
               ],
             ),
@@ -149,10 +148,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
             lastNameTextFormField(),
             SizedBox(height: _height / 60.0),
             emailTextFormField(),
-            SizedBox(height: _height / 60.0),
-            phoneTextFormField(),
-            SizedBox(height: _height / 60.0),
-            passwordTextFormField(),
+            //SizedBox(height: _height / 60.0),
+            //phoneTextFormField(),
+            //SizedBox(height: _height / 60.0),
+            //passwordTextFormField(),
           ],
         ),
       ),
@@ -259,12 +258,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            "Or create using social media",
-            style: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: _large ? 12 : (_medium ? 11 : 10)),
-          ),
+          // Text(
+          //   "Or create using social media",
+          //   style: TextStyle(
+          //       fontWeight: FontWeight.w400,
+          //       fontSize: _large ? 12 : (_medium ? 11 : 10)),
+          // ),
         ],
       ),
     );
@@ -314,7 +313,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.of(context).pop(SignInPage.routeName);
+              Navigator.of(context).pop(WelcomeScreen.routeName);
               print("Routing to Sign up screen");
             },
             child: Text(

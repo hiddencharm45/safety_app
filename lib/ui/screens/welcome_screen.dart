@@ -1,38 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:safety_app/ui/screens/otp_screen.dart';
-import 'package:safety_app/ui/screens/signup.dart';
 //import 'package:safety_app/ui/test.dart';
 import '../widgets/custom_shape.dart';
 import '../widgets/responsive_ui.dart';
 import '../widgets/textformfield.dart';
 
-class SignInPage extends StatelessWidget {
-  //final _formKey = GlobalKey<FormState>();
-  static const routeName = '/signin';
+class WelcomeScreen extends StatefulWidget {
+  static const routeName = '/welcome';
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SignInScreen(),
-    );
-  }
+  _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
-class SignInScreen extends StatefulWidget {
-  @override
-  _SignInScreenState createState() => _SignInScreenState();
-}
-
-class _SignInScreenState extends State<SignInScreen> {
+class _WelcomeScreenState extends State<WelcomeScreen> {
   double _height;
   double _width;
   double _pixelRatio;
   bool _large;
   bool _medium;
   TextEditingController phoneController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  GlobalKey<FormState> _key = GlobalKey();
+  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -50,13 +37,9 @@ class _SignInScreenState extends State<SignInScreen> {
           child: Column(
             children: <Widget>[
               clipShape(),
-              //welcomeTextRow(),
-              //signInTextRow(),
               form(),
-              //forgetPassTextRow(),
               SizedBox(height: _height / 12),
               button(),
-              //signUpTextRow(),
             ],
           ),
         ),
@@ -69,13 +52,11 @@ class _SignInScreenState extends State<SignInScreen> {
       margin: EdgeInsets.only(
           left: _width / 12.0, right: _width / 12.0, top: _height / 15.0),
       child: Form(
-        key: _key,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           children: <Widget>[
-            //emailTextFormField(),
             phoneTextFormField(),
             SizedBox(height: _height / 40.0),
-            //passwordTextFormField(),
           ],
         ),
       ),
@@ -148,10 +129,14 @@ class _SignInScreenState extends State<SignInScreen> {
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       onPressed: () {
-        Navigator.of(context).pushReplacementNamed(OtpScreen.routeName);
-        print("Routing to your account");
-        Scaffold.of(context)
-            .showSnackBar(SnackBar(content: Text('Login Successful')));
+        print(phoneController.text);
+        if (phoneController.text.length != 10) {
+          _scaffoldkey.currentState
+              .showSnackBar(SnackBar(content: Text('Invalid Phone Number')));
+        } else {
+          Navigator.of(context).pushReplacementNamed(OtpScreen.routeName);
+          //arguments: {'phone': phoneController.text.toString()});
+        }
       },
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),
@@ -165,126 +150,8 @@ class _SignInScreenState extends State<SignInScreen> {
           ),
         ),
         padding: const EdgeInsets.all(12.0),
-        child: Text('SIGN IN',
+        child: Text('Verify Number',
             style: TextStyle(fontSize: _large ? 14 : (_medium ? 12 : 10))),
-      ),
-    );
-  }
-
-  Widget welcomeTextRow() {
-    return Container(
-      margin: EdgeInsets.only(left: _width / 20, top: _height / 100),
-      child: Row(
-        children: <Widget>[
-          Text(
-            "Welcome",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: _large ? 60 : (_medium ? 50 : 40),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget signInTextRow() {
-    return Container(
-      margin: EdgeInsets.only(left: _width / 15.0),
-      child: Row(
-        children: <Widget>[
-          Text(
-            "Sign in to your account",
-            style: TextStyle(
-              fontWeight: FontWeight.w200,
-              fontSize: _large ? 20 : (_medium ? 17.5 : 15),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget emailTextFormField() {
-    return CustomTextField(
-      keyboardType: TextInputType.emailAddress,
-      textEditingController: emailController,
-      icon: Icons.email,
-      hint: "Email ID",
-    );
-  }
-
-  Widget passwordTextFormField() {
-    return CustomTextField(
-      keyboardType: TextInputType.emailAddress,
-      textEditingController: passwordController,
-      icon: Icons.lock,
-      obscureText: true,
-      hint: "Password",
-    );
-  }
-
-  Widget forgetPassTextRow() {
-    return Container(
-      margin: EdgeInsets.only(top: _height / 40.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            "Forgot your password?",
-            style: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: _large ? 14 : (_medium ? 12 : 10)),
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          GestureDetector(
-            onTap: () {
-              // Navigator.of(context).pushNamed(
-              // RecoveryPage.routeName); //here I/ve manipulated the code
-              print("Routing");
-            },
-            child: Text(
-              "Recover",
-              style: TextStyle(
-                  fontWeight: FontWeight.w600, color: Colors.orange[200]),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget signUpTextRow() {
-    return Container(
-      margin: EdgeInsets.only(top: _height / 120.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            "Don't have an account?",
-            style: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: _large ? 14 : (_medium ? 12 : 10)),
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed(SignUpScreen.routeName);
-              print("Routing to Sign up screen");
-            },
-            child: Text(
-              "Sign up",
-              style: TextStyle(
-                  fontWeight: FontWeight.w800,
-                  color: Colors.orange[200],
-                  fontSize: _large ? 19 : (_medium ? 17 : 15)),
-            ),
-          )
-        ],
       ),
     );
   }
