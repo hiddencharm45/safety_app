@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:safety_app/ui/providers/contact_provider.dart';
-import 'ui/screens/main_screen.dart';
-import 'ui/screens/signin.dart';
+import 'package:safety_app/ui/screens/wrapper.dart';
+import 'package:safety_app/ui/services/auth.dart';
+import 'ui/screens/dashboard.dart';
+import 'ui/screens/welcome_screen.dart';
 import 'ui/screens/signup.dart';
 import 'ui/screens/splashscreen.dart';
-import 'package:safety_app/ui/screens/signin.dart';
+import 'package:safety_app/ui/screens/welcome_screen.dart';
 import 'package:safety_app/ui/screens/signup.dart';
 import 'package:safety_app/ui/screens/splashscreen.dart';
 //import './ui/test.dart';
@@ -22,20 +24,20 @@ class MyApp extends StatelessWidget {
     ]);
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          builder: (ctx) => ContactProvider(),
-        ),
+        ChangeNotifierProvider(builder: (ctx) => ContactProvider()),
+        //listens to the changes in contact list
+        StreamProvider<String>.value(value: AuthService().signedIn)
+        //listens to changes in auth state
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "Login",
-        theme: ThemeData(
-          primaryColor: Colors.orange[200],
-          //accentColor:
-        ),
+        theme: ThemeData(primaryColor: Colors.orange[200]),
+        home: Wrapper(),
 
-        initialRoute: SplashScreen.routeName,
+        //initialRoute: SplashScreen.routeName,
         //initialRoute: Dashboard.routeName,
+
         routes: <String, WidgetBuilder>{
           SplashScreen.routeName: (ctx) => SplashScreen(),
           SignInPage.routeName: (ctx) => SignInPage(),
