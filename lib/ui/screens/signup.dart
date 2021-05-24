@@ -1,5 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:safety_app/ui/screens/welcome_screen.dart';
 import '../widgets/custom_shape.dart';
 import '../widgets/customappbar.dart';
 import '../widgets/responsive_ui.dart';
@@ -7,6 +8,10 @@ import '../widgets/textformfield.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const routeName = '/signup';
+  final String phone;
+
+  SignUpScreen(this.phone);
+
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -18,6 +23,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   double _pixelRatio;
   bool _large;
   bool _medium;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +51,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: _height / 35,
                 ),
                 button(),
-                infoTextRow(),
+                //infoTextRow(),
                 //socialIconsRow(),
                 //signInTextRow(),
               ],
@@ -139,38 +146,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget form() {
     return Container(
       margin: EdgeInsets.only(
-          left: _width / 12.0, right: _width / 12.0, top: _height / 20.0),
+          left: _width / 12.0, right: _width / 12.0, top: _width / 12.0),
       child: Form(
         child: Column(
           children: <Widget>[
-            firstNameTextFormField(),
-            SizedBox(height: _height / 60.0),
-            lastNameTextFormField(),
+            phoneText(),
+            SizedBox(height: _height / 20.0),
+            nameTextFormField(),
             SizedBox(height: _height / 60.0),
             emailTextFormField(),
+            SizedBox(height: _height / 60.0),
             //SizedBox(height: _height / 60.0),
-            //phoneTextFormField(),
-            //SizedBox(height: _height / 60.0),
-            //passwordTextFormField(),
           ],
         ),
       ),
     );
   }
 
-  Widget firstNameTextFormField() {
+  Widget nameTextFormField() {
     return CustomTextField(
       keyboardType: TextInputType.text,
       icon: Icons.person,
-      hint: "First Name",
-    );
-  }
-
-  Widget lastNameTextFormField() {
-    return CustomTextField(
-      keyboardType: TextInputType.text,
-      icon: Icons.person,
-      hint: "Last Name",
+      hint: "Enter Your Full Name",
+      textEditingController: nameController,
     );
   }
 
@@ -178,24 +176,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return CustomTextField(
       keyboardType: TextInputType.emailAddress,
       icon: Icons.email,
-      hint: "Email ID",
-    );
-  }
-
-  Widget phoneTextFormField() {
-    return CustomTextField(
-      keyboardType: TextInputType.number,
-      icon: Icons.phone,
-      hint: "Mobile Number",
-    );
-  }
-
-  Widget passwordTextFormField() {
-    return CustomTextField(
-      keyboardType: TextInputType.text,
-      obscureText: true,
-      icon: Icons.lock,
-      hint: "Password",
+      hint: "Enter Your Email ID",
+      textEditingController: emailController,
     );
   }
 
@@ -229,13 +211,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       onPressed: () {
+        Map<String, dynamic> data = {
+          "name": nameController.text.toString(),
+          "email": emailController.text.toString(),
+          "phone": widget.phone
+        };
+        CollectionReference collectionReference =
+            FirebaseFirestore.instance.collection('users');
+        collectionReference.add(data);
         print("Routing to your account");
       },
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),
       child: Container(
         alignment: Alignment.center,
-//        height: _height / 20,
+        //height: _height / 20,
         width: _large ? _width / 4 : (_medium ? _width / 3.75 : _width / 3.5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -252,80 +242,102 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget infoTextRow() {
-    return Container(
-      margin: EdgeInsets.only(top: _height / 40.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          // Text(
-          //   "Or create using social media",
-          //   style: TextStyle(
-          //       fontWeight: FontWeight.w400,
-          //       fontSize: _large ? 12 : (_medium ? 11 : 10)),
-          // ),
-        ],
-      ),
-    );
+  // Widget lastNameTextFormField() {
+  //   return CustomTextField(
+  //     keyboardType: TextInputType.text,
+  //     icon: Icons.person,
+  //     hint: "Last Name",
+  //   );
+  // }
+
+  Widget phoneText() {
+    return Text(widget.phone,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24));
   }
 
-  Widget socialIconsRow() {
-    return Container(
-      margin: EdgeInsets.only(top: _height / 80.0),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          CircleAvatar(
-            radius: 15,
-            backgroundImage: AssetImage("assets/images/googlelogo.png"),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-          CircleAvatar(
-            radius: 15,
-            backgroundImage: AssetImage("assets/images/fblogo.jpg"),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-          CircleAvatar(
-            radius: 15,
-            backgroundImage: AssetImage("assets/images/twitterlogo.jpg"),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget passwordTextFormField() {
+  //   return CustomTextField(
+  //     keyboardType: TextInputType.text,
+  //     obscureText: true,
+  //     icon: Icons.lock,
+  //     hint: "Password",
+  //   );
+  // }
 
-  Widget signInTextRow() {
-    return Container(
-      margin: EdgeInsets.only(top: _height / 20.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            "Already have an account?",
-            style: TextStyle(fontWeight: FontWeight.w400),
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop(WelcomeScreen.routeName);
-              print("Routing to Sign up screen");
-            },
-            child: Text(
-              "Sign in",
-              style: TextStyle(
-                  fontWeight: FontWeight.w800,
-                  color: Colors.orange[200],
-                  fontSize: 19),
-            ),
-          )
-        ],
-      ),
-    );
-  }
+  // Widget infoTextRow() {
+  //   return Container(
+  //     margin: EdgeInsets.only(top: _height / 40.0),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: <Widget>[
+  //         Text(
+  //           "Or create using social media",
+  //           style: TextStyle(
+  //               fontWeight: FontWeight.w400,
+  //               fontSize: _large ? 12 : (_medium ? 11 : 10)),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  // Widget socialIconsRow() {
+  //   return Container(
+  //     margin: EdgeInsets.only(top: _height / 80.0),
+  //     child: Row(
+  //       mainAxisSize: MainAxisSize.min,
+  //       children: <Widget>[
+  //         CircleAvatar(
+  //           radius: 15,
+  //           backgroundImage: AssetImage("assets/images/googlelogo.png"),
+  //         ),
+  //         SizedBox(
+  //           width: 20,
+  //         ),
+  //         CircleAvatar(
+  //           radius: 15,
+  //           backgroundImage: AssetImage("assets/images/fblogo.jpg"),
+  //         ),
+  //         SizedBox(
+  //           width: 20,
+  //         ),
+  //         CircleAvatar(
+  //           radius: 15,
+  //           backgroundImage: AssetImage("assets/images/twitterlogo.jpg"),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  // Widget signInTextRow() {
+  //   return Container(
+  //     margin: EdgeInsets.only(top: _height / 20.0),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: <Widget>[
+  //         Text(
+  //           "Already have an account?",
+  //           style: TextStyle(fontWeight: FontWeight.w400),
+  //         ),
+  //         SizedBox(
+  //           width: 5,
+  //         ),
+  //         GestureDetector(
+  //           onTap: () {
+  //             Navigator.of(context).pop(WelcomeScreen.routeName);
+  //             print("Routing to Sign up screen");
+  //           },
+  //           child: Text(
+  //             "Sign in",
+  //             style: TextStyle(
+  //                 fontWeight: FontWeight.w800,
+  //                 color: Colors.orange[200],
+  //                 fontSize: 19),
+  //           ),
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
 }
