@@ -5,17 +5,14 @@ import 'package:safety_app/ui/screens/dashboard.dart';
 
 class OtpScreen extends StatefulWidget {
   static const routeName = '/otp-screen';
-  final String phone;
-
-  OtpScreen(this.phone);
 
   @override
   _OtpScreenState createState() => _OtpScreenState();
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   String _verificationCode;
+  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   final TextEditingController _pinPutController = TextEditingController();
   final FocusNode _pinPutFocusNode = FocusNode();
   final BoxDecoration pinPutDecoration = BoxDecoration(
@@ -28,6 +25,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //phone = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       key: _scaffoldkey,
       appBar: AppBar(
@@ -85,7 +83,8 @@ class _OtpScreenState extends State<OtpScreen> {
 
   _verifyPhone() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: '+1${widget.phone}',
+        phoneNumber: '+91' + '7004043651',
+        //num to be retrieved from welcome_screen instead of hard coding it
         verificationCompleted: (PhoneAuthCredential credential) async {
           await FirebaseAuth.instance
               .signInWithCredential(credential)

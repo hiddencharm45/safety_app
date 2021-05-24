@@ -1,9 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:safety_app/ui/providers/contact_provider.dart';
+import 'package:safety_app/ui/screens/otp_screen.dart';
 import 'package:safety_app/ui/screens/wrapper.dart';
-import 'package:safety_app/ui/services/auth.dart';
+//import 'package:safety_app/ui/services/auth.dart';
 import 'ui/screens/dashboard.dart';
 import 'ui/screens/welcome_screen.dart';
 import 'ui/screens/signup.dart';
@@ -13,7 +15,12 @@ import 'package:safety_app/ui/screens/signup.dart';
 import 'package:safety_app/ui/screens/splashscreen.dart';
 //import './ui/test.dart';
 
-void main() => runApp(MyApp());
+//void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -26,7 +33,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(builder: (ctx) => ContactProvider()),
         //listens to the changes in contact list
-        StreamProvider<String>.value(value: AuthService().signedIn)
+        //StreamProvider<String>.value(value: AuthService().signedIn)
         //listens to changes in auth state
       ],
       child: MaterialApp(
@@ -40,9 +47,9 @@ class MyApp extends StatelessWidget {
 
         routes: <String, WidgetBuilder>{
           SplashScreen.routeName: (ctx) => SplashScreen(),
-          SignInPage.routeName: (ctx) => SignInPage(),
+          WelcomeScreen.routeName: (ctx) => WelcomeScreen(),
           SignUpScreen.routeName: (ctx) => SignUpScreen(),
-          //RecoveryPage.routeName: (ctx) => RecoveryPage(),
+          OtpScreen.routeName: (ctx) => OtpScreen(),
           Dashboard.routeName: (ctx) => Dashboard(),
         },
       ),
