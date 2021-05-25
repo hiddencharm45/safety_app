@@ -190,3 +190,122 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
   }
 }
+
+//  Widget welcomeTextRow() {
+//     return Container(
+//       margin: EdgeInsets.only(left: _width / 20, top: _height / 100),
+//       child: Row(
+//         children: <Widget>[
+//           Text(
+//             "Welcome",
+//             style: TextStyle(
+//               fontWeight: FontWeight.bold,
+//               fontSize: _large ? 60 : (_medium ? 50 : 40),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+
+//   Widget signInTextRow() {
+//     return Container(
+//       margin: EdgeInsets.only(left: _width / 15.0),
+//       child: Row(
+//         children: <Widget>[
+//           Text(
+//             "Sign in to your account",
+//             style: TextStyle(
+//               fontWeight: FontWeight.w200,
+//               fontSize: _large ? 20 : (_medium ? 17.5 : 15),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+
+// Widget emailTextFormField() {
+//     return CustomTextField(
+//       keyboardType: TextInputType.emailAddress,
+//       textEditingController: emailController,
+//       icon: Icons.email,
+//       hint: "Email ID",
+//     );
+//   }
+
+//   Widget passwordTextFormField() {
+//     return CustomTextField(
+//       keyboardType: TextInputType.emailAddress,
+//       textEditingController: passwordController,
+//       icon: Icons.lock,
+//       obscureText: true,
+//       hint: "Password",
+//     );
+//   }
+
+//   Widget forgetPassTextRow() {
+//     return Container(
+//       margin: EdgeInsets.only(top: _height / 40.0),
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: <Widget>[
+//           Text(
+//             "Forgot your password?",
+//             style: TextStyle(
+//                 fontWeight: FontWeight.w400,
+//                 fontSize: _large ? 14 : (_medium ? 12 : 10)),
+//           ),
+//           SizedBox(
+//             width: 5,
+//           ),
+//           GestureDetector(
+//             onTap: () {
+//               // Navigator.of(context).pushNamed(
+//               // RecoveryPage.routeName); //here I/ve manipulated the code
+//               print("Routing");
+//             },
+//             child: Text(
+//               "Recover",
+//               style: TextStyle(
+//                   fontWeight: FontWeight.w600, color: Colors.orange[200]),
+//             ),
+//           )
+//         ],
+//       ),
+//     );
+//   }
+
+// Widget signUpTextRow() {
+//     return Container(
+//       margin: EdgeInsets.only(top: _height / 120.0),
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: <Widget>[
+//           Text(
+//             "Don't have an account?",
+//             style: TextStyle(
+//                 fontWeight: FontWeight.w400,
+//                 fontSize: _large ? 14 : (_medium ? 12 : 10)),
+//           ),
+//           SizedBox(
+//             width: 5,
+//           ),
+//           GestureDetector(
+//             onTap: () {
+//               Navigator.of(context).pushNamed(SignUpScreen.routeName);
+//               print("Routing to Sign up screen");
+//             },
+//             child: Text(
+//               "Sign up",
+//               style: TextStyle(
+//                   fontWeight: FontWeight.w800,
+//                   color: Colors.orange[200],
+//                   fontSize: _large ? 19 : (_medium ? 17 : 15)),
+//             ),
+//           )
+//         ],
+//       ),
+//     );
+//   }
+// }

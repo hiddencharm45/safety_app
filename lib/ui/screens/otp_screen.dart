@@ -1,7 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
-//import 'package:safety_app/ui/screens/dashboard.dart';
+import 'package:safety_app/ui/screens/dashboard.dart';
 import 'package:safety_app/ui/screens/signup.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -70,16 +71,26 @@ class _OtpScreenState extends State<OtpScreen> {
                       .signInWithCredential(PhoneAuthProvider.credential(
                           verificationId: _verificationCode, smsCode: pin))
                       .then((value) async {
-                    // an if statement to be put to check if there's an existing user with the uid
-                    print("Thisssssssss is the value of" + value.toString());
-                    if (value.user != null) {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  SignUpScreen(phone['phone'])),
-                          (route) => false);
-                    }
+                    FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(value.user.uid)
+                        .get()
+                        .then((DocumentSnapshot documentSnapshot) {
+                      if (documentSnapshot.exists && value.user != null) {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Dashboard()),
+                            (route) => false);
+                      } else {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignUpScreen(
+                                    phone['phone'], value.user.uid.toString())),
+                            (route) => false);
+                      }
+                    });
                   });
                 } catch (e) {
                   FocusScope.of(context).unfocus();
@@ -103,14 +114,25 @@ class _OtpScreenState extends State<OtpScreen> {
               .signInWithCredential(credential)
               .then((value) async {
             print("Thisssssssss is the value of" + value.toString());
-            // an if statement to be put to check if there's an existing user with the uid
-            if (value.user != null) {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SignUpScreen(phone['phone'])),
-                  (route) => false);
-            }
+            FirebaseFirestore.instance
+                .collection('users')
+                .doc(value.user.uid)
+                .get()
+                .then((DocumentSnapshot documentSnapshot) {
+              if (documentSnapshot.exists && value.user != null) {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => Dashboard()),
+                    (route) => false);
+              } else {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SignUpScreen(
+                            phone['phone'], value.user.uid.toString())),
+                    (route) => false);
+              }
+            });
           });
         },
         verificationFailed: (FirebaseAuthException e) {

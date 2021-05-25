@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:safety_app/ui/screens/dashboard.dart';
 import '../widgets/custom_shape.dart';
 import '../widgets/customappbar.dart';
 import '../widgets/responsive_ui.dart';
@@ -9,8 +10,9 @@ import '../widgets/textformfield.dart';
 class SignUpScreen extends StatefulWidget {
   static const routeName = '/signup';
   final String phone;
+  final String uid;
 
-  SignUpScreen(this.phone);
+  SignUpScreen(this.phone, this.uid);
 
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
@@ -25,6 +27,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _medium;
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +39,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     return Material(
       child: Scaffold(
+        key: _scaffoldkey,
         body: Container(
           height: _height,
           width: _width,
@@ -50,7 +54,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 SizedBox(
                   height: _height / 35,
                 ),
-                button(),
+                button(_scaffoldkey),
                 //infoTextRow(),
                 //socialIconsRow(),
                 //signInTextRow(),
@@ -206,19 +210,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget button() {
+  Widget button(GlobalKey<ScaffoldState> _scaffoldkey) {
     return RaisedButton(
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      onPressed: () {
+      onPressed: () async {
         Map<String, dynamic> data = {
+          "uid": widget.uid,
           "name": nameController.text.toString(),
           "email": emailController.text.toString(),
           "phone": widget.phone
         };
         CollectionReference collectionReference =
             FirebaseFirestore.instance.collection('users');
-        collectionReference.add(data);
+        collectionReference
+            .add(data)
+            .then((value) =>
+                Navigator.of(context).pushReplacementNamed(Dashboard.routeName))
+            .catchError(() {
+          print("Error Signing Up");
+          _scaffoldkey.currentState
+              .showSnackBar(SnackBar(content: Text('Error Signing Up')));
+        });
         print("Routing to your account");
       },
       textColor: Colors.white,

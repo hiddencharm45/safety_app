@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         Provider<AuthService>(
             builder: (ctx) => AuthService(FirebaseAuth.instance)),
         //listens to changes in auth state
-        //StreamProvider(builder: (ctx) => ctx.<AuthService>().authStateChanges)
+        //StreamProvider(builder: (ctx) => ctx.read.<AuthService>().authStateChanges)
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
         routes: <String, WidgetBuilder>{
           SplashScreen.routeName: (ctx) => SplashScreen(),
           WelcomeScreen.routeName: (ctx) => WelcomeScreen(),
-          SignUpScreen.routeName: (ctx) => SignUpScreen(""),
+          SignUpScreen.routeName: (ctx) => SignUpScreen("", ""),
           OtpScreen.routeName: (ctx) => OtpScreen(),
           Dashboard.routeName: (ctx) => Dashboard(),
         },
