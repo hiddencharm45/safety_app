@@ -46,7 +46,6 @@ class SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Colors.black54,
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
@@ -70,7 +69,7 @@ class SplashScreenState extends State<SplashScreen>
                 'assets/images/logo.png', //image file
                 width: animation.value * 300,
                 height: animation.value * 300,
-              ),
+              )
             ],
           ),
         ],

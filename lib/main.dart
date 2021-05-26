@@ -13,6 +13,7 @@ import 'ui/screens/splashscreen.dart';
 import 'package:safety_app/ui/screens/welcome_screen.dart';
 import 'package:safety_app/ui/screens/signup.dart';
 import 'package:safety_app/ui/screens/splashscreen.dart';
+//import './ui/services/auth.dart';
 //import './ui/test.dart';
 
 //void main() => runApp(MyApp());
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(builder: (ctx) => ContactProvider()),
         //listens to the changes in contact list
-        //StreamProvider<String>.value(value: AuthService().signedIn)
+        //StreamProvider<String>.value(value: AuthService().signInEmail()),
         //listens to changes in auth state
       ],
       child: MaterialApp(
