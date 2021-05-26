@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
+// import 'package:safety_app/ui/screens/signup.dart';
 import 'package:safety_app/ui/screens/splashscreen.dart';
-// import 'dashboard.dart';
+// import 'package:safety_app/ui/screens/dashboard.dart';
 
 class Wrapper extends StatelessWidget {
   @override
@@ -12,5 +13,6 @@ class Wrapper extends StatelessWidget {
     //   return Dashboard(); //returns home screen if logged in
     // else
     return SplashScreen(); //returns signIn page if not logged in
+    //return SignUpScreen('7278419247', '');
   }
 }

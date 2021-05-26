@@ -28,8 +28,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     _pixelRatio = MediaQuery.of(context).devicePixelRatio;
     _large = ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
     _medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
-    return Material(
-      child: Container(
+    return Scaffold(
+      key: _scaffoldkey,
+      body: Container(
         height: _height,
         width: _width,
         padding: EdgeInsets.only(bottom: 5),
@@ -39,7 +40,40 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               clipShape(),
               form(),
               SizedBox(height: _height / 12),
-              button(),
+              RaisedButton(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0)),
+                onPressed: () {
+                  if (phoneController.text.length != 10) {
+                    print(phoneController.text);
+                    _scaffoldkey.currentState.showSnackBar(
+                        SnackBar(content: Text('Invalid Phone Number')));
+                  } else {
+                    Navigator.of(context).pushReplacementNamed(
+                        OtpScreen.routeName,
+                        arguments: {'phone': phoneController.text.toString()});
+                  }
+                },
+                textColor: Colors.white,
+                padding: EdgeInsets.all(0.0),
+                child: Container(
+                  alignment: Alignment.center,
+                  width: _large
+                      ? _width / 4
+                      : (_medium ? _width / 3.75 : _width / 3.5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                    gradient: LinearGradient(
+                      colors: <Color>[Colors.orange[200], Colors.pinkAccent],
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text('Verify Number',
+                      style: TextStyle(
+                          fontSize: _large ? 14 : (_medium ? 12 : 10))),
+                ),
+              )
             ],
           ),
         ),
@@ -129,13 +163,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       onPressed: () {
-        print(phoneController.text);
         if (phoneController.text.length != 10) {
-          _scaffoldkey.currentState
-              .showSnackBar(SnackBar(content: Text('Invalid Phone Number')));
+          print(phoneController.text);
+          // _scaffoldkey.currentState
+          //   .showSnackBar(SnackBar(content: Text('Invalid Phone Number')));
         } else {
-          Navigator.of(context).pushReplacementNamed(OtpScreen.routeName);
-          //arguments: {'phone': phoneController.text.toString()});
+          Navigator.of(context).pushReplacementNamed(OtpScreen.routeName,
+              arguments: {'phone': phoneController.text.toString()});
         }
       },
       textColor: Colors.white,
@@ -156,3 +190,122 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
   }
 }
+
+//  Widget welcomeTextRow() {
+//     return Container(
+//       margin: EdgeInsets.only(left: _width / 20, top: _height / 100),
+//       child: Row(
+//         children: <Widget>[
+//           Text(
+//             "Welcome",
+//             style: TextStyle(
+//               fontWeight: FontWeight.bold,
+//               fontSize: _large ? 60 : (_medium ? 50 : 40),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+
+//   Widget signInTextRow() {
+//     return Container(
+//       margin: EdgeInsets.only(left: _width / 15.0),
+//       child: Row(
+//         children: <Widget>[
+//           Text(
+//             "Sign in to your account",
+//             style: TextStyle(
+//               fontWeight: FontWeight.w200,
+//               fontSize: _large ? 20 : (_medium ? 17.5 : 15),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+
+// Widget emailTextFormField() {
+//     return CustomTextField(
+//       keyboardType: TextInputType.emailAddress,
+//       textEditingController: emailController,
+//       icon: Icons.email,
+//       hint: "Email ID",
+//     );
+//   }
+
+//   Widget passwordTextFormField() {
+//     return CustomTextField(
+//       keyboardType: TextInputType.emailAddress,
+//       textEditingController: passwordController,
+//       icon: Icons.lock,
+//       obscureText: true,
+//       hint: "Password",
+//     );
+//   }
+
+//   Widget forgetPassTextRow() {
+//     return Container(
+//       margin: EdgeInsets.only(top: _height / 40.0),
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: <Widget>[
+//           Text(
+//             "Forgot your password?",
+//             style: TextStyle(
+//                 fontWeight: FontWeight.w400,
+//                 fontSize: _large ? 14 : (_medium ? 12 : 10)),
+//           ),
+//           SizedBox(
+//             width: 5,
+//           ),
+//           GestureDetector(
+//             onTap: () {
+//               // Navigator.of(context).pushNamed(
+//               // RecoveryPage.routeName); //here I/ve manipulated the code
+//               print("Routing");
+//             },
+//             child: Text(
+//               "Recover",
+//               style: TextStyle(
+//                   fontWeight: FontWeight.w600, color: Colors.orange[200]),
+//             ),
+//           )
+//         ],
+//       ),
+//     );
+//   }
+
+// Widget signUpTextRow() {
+//     return Container(
+//       margin: EdgeInsets.only(top: _height / 120.0),
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: <Widget>[
+//           Text(
+//             "Don't have an account?",
+//             style: TextStyle(
+//                 fontWeight: FontWeight.w400,
+//                 fontSize: _large ? 14 : (_medium ? 12 : 10)),
+//           ),
+//           SizedBox(
+//             width: 5,
+//           ),
+//           GestureDetector(
+//             onTap: () {
+//               Navigator.of(context).pushNamed(SignUpScreen.routeName);
+//               print("Routing to Sign up screen");
+//             },
+//             child: Text(
+//               "Sign up",
+//               style: TextStyle(
+//                   fontWeight: FontWeight.w800,
+//                   color: Colors.orange[200],
+//                   fontSize: _large ? 19 : (_medium ? 17 : 15)),
+//             ),
+//           )
+//         ],
+//       ),
+//     );
+//   }
+// }
