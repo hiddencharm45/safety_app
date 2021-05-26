@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 import 'package:safety_app/ui/screens/dashboard.dart';
+import 'package:safety_app/ui/screens/signup.dart';
 
 class OtpScreen extends StatefulWidget {
   static const routeName = '/otp-screen';
@@ -11,6 +13,7 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
+  Map phone;
   String _verificationCode;
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   final TextEditingController _pinPutController = TextEditingController();
@@ -25,21 +28,28 @@ class _OtpScreenState extends State<OtpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //phone = ModalRoute.of(context).settings.arguments;
+    phone = ModalRoute.of(context).settings.arguments;
+
+    print(phone['phone']);
+    _verifyPhone();
+
     return Scaffold(
       key: _scaffoldkey,
       appBar: AppBar(
-        title: Text('OTP Verification'),
+        centerTitle: true,
+        title: Text('OTP Verification of ' + phone['phone']),
       ),
       body: Column(
         children: [
           Container(
             margin: EdgeInsets.only(top: 40),
-            child: Center(
-              child: Text(
-                'Enter the OTP sent to your number',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
-              ),
+            child: Text(
+              'Enter the OTP sent to your number',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26,
+                  color: Colors.blue),
+              textAlign: TextAlign.center,
             ),
           ),
           Padding(
@@ -61,12 +71,26 @@ class _OtpScreenState extends State<OtpScreen> {
                       .signInWithCredential(PhoneAuthProvider.credential(
                           verificationId: _verificationCode, smsCode: pin))
                       .then((value) async {
-                    if (value.user != null) {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => Dashboard()),
-                          (route) => false);
-                    }
+                    FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(value.user.uid)
+                        .get()
+                        .then((DocumentSnapshot documentSnapshot) {
+                      if (documentSnapshot.exists && value.user != null) {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Dashboard()),
+                            (route) => false);
+                      } else {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignUpScreen(
+                                    phone['phone'], value.user.uid.toString())),
+                            (route) => false);
+                      }
+                    });
                   });
                 } catch (e) {
                   FocusScope.of(context).unfocus();
@@ -83,18 +107,32 @@ class _OtpScreenState extends State<OtpScreen> {
 
   _verifyPhone() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: '+91' + '7004043651',
+        phoneNumber: '+91' + (phone['phone']),
         //num to be retrieved from welcome_screen instead of hard coding it
         verificationCompleted: (PhoneAuthCredential credential) async {
           await FirebaseAuth.instance
               .signInWithCredential(credential)
               .then((value) async {
-            if (value.user != null) {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => Dashboard()),
-                  (route) => false);
-            }
+            print("Thisssssssss is the value of" + value.toString());
+            FirebaseFirestore.instance
+                .collection('users')
+                .doc(value.user.uid)
+                .get()
+                .then((DocumentSnapshot documentSnapshot) {
+              if (documentSnapshot.exists && value.user != null) {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => Dashboard()),
+                    (route) => false);
+              } else {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SignUpScreen(
+                            phone['phone'], value.user.uid.toString())),
+                    (route) => false);
+              }
+            });
           });
         },
         verificationFailed: (FirebaseAuthException e) {
@@ -113,9 +151,10 @@ class _OtpScreenState extends State<OtpScreen> {
         timeout: Duration(seconds: 120));
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _verifyPhone();
-  }
+  //@override
+  // void initState() {
+  //   super.initState();
+  //   _verifyPhone();
+  // }
+
 }
