@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../providers/contact_provider.dart';
 
-class ContactItem extends StatelessWidget {
-  final String id;
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class ContactItem extends StatefulWidget {
   final String name;
-  final int number;
-  ContactItem(this.id, this.name, this.number);
+  final String phone;
+  final DocumentReference ref;
+
+  ContactItem(this.name, this.phone, this.ref);
+
+  @override
+  _ContactItemState createState() => _ContactItemState();
+}
+
+class _ContactItemState extends State<ContactItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(name),
+      title: Text(widget.name),
       leading: CircleAvatar(
         backgroundColor: Colors.pink,
         child: Text(
-          name[0].toString().toUpperCase(),
+          widget.name[0].toString().toUpperCase(),
           style: TextStyle(
             color: Colors.white,
           ),
@@ -28,8 +35,7 @@ class ContactItem extends StatelessWidget {
             IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: () {
-                  Provider.of<ContactProvider>(context, listen: false)
-                      .deleteContact(id);
+                  widget.ref.delete();
                 },
                 color: Theme.of(context).errorColor),
           ],

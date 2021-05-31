@@ -3,9 +3,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:safety_app/ui/providers/contact_provider.dart';
+
 import 'package:safety_app/ui/screens/otp_screen.dart';
-import 'package:safety_app/ui/screens/wrapper.dart';
+
 import 'package:safety_app/ui/services/auth.dart';
 //import 'package:safety_app/ui/services/auth.dart';
 import 'ui/screens/dashboard.dart';
@@ -34,7 +34,6 @@ class MyApp extends StatelessWidget {
     ]);
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(builder: (ctx) => ContactProvider()),
         //listens to the changes in contact list
         Provider<AuthService>(
             builder: (ctx) => AuthService(FirebaseAuth.instance)),
@@ -45,7 +44,26 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: "Login",
         theme: ThemeData(primaryColor: Colors.orange[200]),
-        home: Wrapper(),
+        // home: Wrapper(),
+
+        //By adding stream provider tokens are being managed automatically
+
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.onAuthStateChanged,
+          builder: (ctx, userSnapshot) {
+            if (userSnapshot.connectionState == ConnectionState.waiting) {
+              //return SplashScreen();
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (userSnapshot.hasData) {
+              //that is if we found the token
+              return Dashboard();
+            }
+            return SplashScreen();
+          },
+        ),
 
         //initialRoute: SplashScreen.routeName,
         //initialRoute: Dashboard.routeName,

@@ -53,6 +53,9 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
+        // debug{
+        //     signingConfig signingConfigs.debug
+        // }
     }
 }
 
@@ -66,5 +69,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth'
     implementation "androidx.browser:browser:1.2.0"
+    
 
 }

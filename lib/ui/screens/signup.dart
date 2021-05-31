@@ -215,23 +215,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       onPressed: () async {
-        Map<String, dynamic> data = {
-          "uid": widget.uid,
-          "name": nameController.text.toString(),
-          "email": emailController.text.toString(),
-          "phone": widget.phone
-        };
-        CollectionReference collectionReference =
-            FirebaseFirestore.instance.collection('users');
-        collectionReference
-            .add(data)
+        // Map<String, dynamic> data = {
+        //   "uid": widget.uid,
+        //   "name": nameController.text.toString(),
+        //   "email": emailController.text.toString().trim(),
+        //   "phone": widget.phone
+        // };
+        // if (data['name'].isEmpty || data['email'].isEmpty) {
+        //   return Scaffold.of(context).showSnackBar(SnackBar(
+        //     content: Text('Fields Empty'),
+        //   ));
+        // }
+//here path can be set of user_id ND MAP can be altered a bit
+        //CollectionReference collectionReference =
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(widget.uid)
+            .set({
+              "name": nameController.text.toString(),
+              "email": emailController.text.toString().trim(),
+              "phone": widget.phone
+            })
+            //collectionReference
+            // .add(data)
             .then((value) =>
                 Navigator.of(context).pushReplacementNamed(Dashboard.routeName))
             .catchError(() {
-          print("Error Signing Up");
-          _scaffoldkey.currentState
-              .showSnackBar(SnackBar(content: Text('Error Signing Up')));
-        });
+              print("Error Signing Up");
+              _scaffoldkey.currentState
+                  .showSnackBar(SnackBar(content: Text('Error Signing Up')));
+            });
         print("Routing to your account");
       },
       textColor: Colors.white,

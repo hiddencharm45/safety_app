@@ -38,42 +38,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           child: Column(
             children: <Widget>[
               clipShape(),
+              welcomeTextRow(),
+              SizedBox(height: _height / 10),
               form(),
-              SizedBox(height: _height / 12),
-              RaisedButton(
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0)),
-                onPressed: () {
-                  if (phoneController.text.length != 10) {
-                    print(phoneController.text);
-                    _scaffoldkey.currentState.showSnackBar(
-                        SnackBar(content: Text('Invalid Phone Number')));
-                  } else {
-                    Navigator.of(context).pushReplacementNamed(
-                        OtpScreen.routeName,
-                        arguments: {'phone': phoneController.text.toString()});
-                  }
-                },
-                textColor: Colors.white,
-                padding: EdgeInsets.all(0.0),
-                child: Container(
-                  alignment: Alignment.center,
-                  width: _large
-                      ? _width / 4
-                      : (_medium ? _width / 3.75 : _width / 3.5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                    gradient: LinearGradient(
-                      colors: <Color>[Colors.orange[200], Colors.pinkAccent],
-                    ),
-                  ),
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text('Verify Number',
-                      style: TextStyle(
-                          fontSize: _large ? 14 : (_medium ? 12 : 10))),
-                ),
-              )
+              SizedBox(height: _height / 25),
+              //-----------------Removed Redundant code(Button Widget)-----------------
+
+              button(),
             ],
           ),
         ),
@@ -163,14 +134,24 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       onPressed: () {
-        if (phoneController.text.length != 10) {
-          print(phoneController.text);
-          // _scaffoldkey.currentState
-          //   .showSnackBar(SnackBar(content: Text('Invalid Phone Number')));
-        } else {
-          Navigator.of(context).pushReplacementNamed(OtpScreen.routeName,
-              arguments: {'phone': phoneController.text.toString()});
+        // print(phoneController.text);
+        //Phone number validation Added Here--------------
+
+        String pattern = r'(^[6789]\d{9}$)';
+        RegExp regExp = new RegExp(pattern);
+        if (phoneController.text.length == 0) {
+          return _scaffoldkey.currentState
+              .showSnackBar(SnackBar(content: Text('Field Empty')));
+        } else if (phoneController.text.length != 10) {
+          return _scaffoldkey.currentState
+              .showSnackBar(SnackBar(content: Text('Must be 10 digits')));
+        } else if (!regExp.hasMatch(phoneController.text)) {
+          return _scaffoldkey.currentState
+              .showSnackBar(SnackBar(content: Text('Invalid Phone Number')));
         }
+
+        return Navigator.of(context).pushReplacementNamed(OtpScreen.routeName,
+            arguments: {'phone': phoneController.text.toString()});
       },
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),
@@ -189,24 +170,25 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       ),
     );
   }
-}
 
-//  Widget welcomeTextRow() {
-//     return Container(
-//       margin: EdgeInsets.only(left: _width / 20, top: _height / 100),
-//       child: Row(
-//         children: <Widget>[
-//           Text(
-//             "Welcome",
-//             style: TextStyle(
-//               fontWeight: FontWeight.bold,
-//               fontSize: _large ? 60 : (_medium ? 50 : 40),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
+  Widget welcomeTextRow() {
+    return Container(
+      margin: EdgeInsets.only(left: _width / 20, top: _height / 100),
+      child: Row(
+        children: <Widget>[
+          Text(
+            "Welcome Back!",
+            style: TextStyle(
+              color: Colors.grey[800],
+              fontWeight: FontWeight.bold,
+              fontSize: _large ? 50 : (_medium ? 40 : 30),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 //   Widget signInTextRow() {
 //     return Container(

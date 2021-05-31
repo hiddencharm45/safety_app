@@ -6,6 +6,7 @@ import 'home_screen.dart';
 //import 'package:safety_app/ui/signin.dart';
 import 'contacts_screen.dart';
 import 'user_profile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 //import '../widgets/responsive_ui.dart';
 //import '../ui/widgets/textformfield.dart';
@@ -55,11 +56,31 @@ class _DashboardState extends State<Dashboard> {
 
     return Scaffold(
       body: _body,
+      drawer: Drawer(
+        child: Container(
+            padding: EdgeInsets.all(8),
+            child: FlatButton(
+              child: Container(
+                child: Row(
+                  children: [
+                    Icon(Icons.exit_to_app),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Text('Logout'),
+                  ],
+                ),
+              ),
+              onPressed: () {
+                return FirebaseAuth.instance.signOut();
+              },
+            )),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
 
         unselectedItemColor: Colors.black,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Colors.pink,
 
         currentIndex: _selectedPageIndex,
 

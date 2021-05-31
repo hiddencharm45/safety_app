@@ -24,7 +24,14 @@ OBTAINING SHA FINGERPRINTS:
 4) Make sure that the file i send you is stored in this directory c:\Users\USER_NAME
 
 
-5) Open command prompt & go to jdk bin directory and execute this command: keytool -list -v -keystore c:\Users\	USER_NAME\.android\debug.keystore -alias androiddebugkey -storepass android -keypass android
+5) Open command prompt & go to jdk bin directory and execute this command: keytool -list -v -keystore c:\Users\Ritu\.android\debug.keystore -alias androiddebugkey -storepass android -keypass android
+
+What I had to do- Goto c:users/user_name/android/ and then run this command
+keytool -list -v -keystore debug.keystore -alias androiddebugkey -storepass android -keypass android
+
+ SHA1: 8B:27:5D:79:4A:7B:10:5D:83:20:1E:98:BB:DA:AD:B4:09:0F:5B:9C
+         SHA256: AA:94:A6:C0:C4:CE:D6:45:21:7E:03:E8:A2:BD:12:D3:24:B8:FB:31:26:3F:77:80:59:51:B1:D1:69:61:65:98
+
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -47,3 +54,7 @@ Version: 1
 Warning:
 The certificate uses the SHA1withRSA signature algorithm which is considered a security risk. This algorithm will be disabled in a future update.
 The JKS keystore uses a proprietary format. It is recommended to migrate to PKCS12 which is an industry standard format using "keytool -importkeystore -srckeystore c:\Users\user\.android\debug.keystore -destkeystore c:\Users\user\.android\debug.keystore -deststoretype pkcs12".
+__________________________________________________________________________________________________________________________________
+
+* In main.dart use of AuthProvider?
+* Signup and verification logic

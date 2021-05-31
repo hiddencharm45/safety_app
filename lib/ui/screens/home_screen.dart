@@ -36,14 +36,19 @@ class _HomeScreenState extends State<HomeScreen> {
           //Opacity(opacity: 0.88, child: CustomAppBar()),
           ClipShapeSos(_height, _width, _medium, _large),
 
-          Container(
-            height: _height * 0.56,
-            child: ListView.builder(
-              itemBuilder: (ctx, index) {
-                return NewsItem(Dummy_News[index].title,
-                    Dummy_News[index].image, Dummy_News[index].description);
-              },
-              itemCount: Dummy_News.length,
+          Expanded(
+            child: Container(
+              height: _height * 0.56,
+              child: ListView.builder(
+                itemBuilder: (ctx, index) {
+                  return NewsItem(
+                      Dummy_News[index].title,
+                      Dummy_News[index].image,
+                      Dummy_News[index].description,
+                      Dummy_News[index].id);
+                },
+                itemCount: Dummy_News.length,
+              ),
             ),
           )
         ]));
