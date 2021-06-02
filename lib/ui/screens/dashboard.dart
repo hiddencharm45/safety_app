@@ -1,13 +1,12 @@
-//it is a tabs screen basically
 import 'package:flutter/material.dart';
 import 'package:safety_app/ui/screens/notification_screen.dart';
-// import 'package:safety_app/ui/widgets/clipshape_sos.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'home_screen.dart';
-//import 'package:safety_app/ui/signin.dart';
 import 'contacts_screen.dart';
 import 'user_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+//import 'package:safety_app/ui/signin.dart';
+// import 'package:safety_app/ui/widgets/clipshape_sos.dart';
 //import '../widgets/responsive_ui.dart';
 //import '../ui/widgets/textformfield.dart';
 
@@ -58,36 +57,54 @@ class _DashboardState extends State<Dashboard> {
       body: _body,
       drawer: Drawer(
         child: Container(
-            padding: EdgeInsets.all(8),
-            child: FlatButton(
-              child: Container(
-                child: Row(
-                  children: [
-                    Icon(Icons.exit_to_app),
-                    SizedBox(
-                      width: 8,
+            padding: EdgeInsets.fromLTRB(5, 40, 5, 5),
+            child: Column(
+              children: [
+                FlatButton(
+                  child: Container(
+                    child: Row(
+                      children: [
+                        Icon(Icons.exit_to_app),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Text('Logout'),
+                      ],
                     ),
-                    Text('Logout'),
-                  ],
+                  ),
+                  onPressed: () async {
+                    return FirebaseAuth.instance.signOut();
+                  },
                 ),
-              ),
-              onPressed: () {
-                return FirebaseAuth.instance.signOut();
-              },
+                FlatButton(
+                  child: Container(
+                    child: Row(
+                      children: [
+                        Icon(Icons.delete),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Text('Clear App Data'),
+                      ],
+                    ),
+                  ),
+                  onPressed: () async {
+                    SharedPreferences pref =
+                        await SharedPreferences.getInstance();
+                    await pref.clear();
+                  },
+                ),
+              ],
             )),
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
-
         unselectedItemColor: Colors.black,
         selectedItemColor: Colors.pink,
-
         currentIndex: _selectedPageIndex,
-
         //it tells that which item is selected
         type: BottomNavigationBarType
             .fixed, //will add a transition and remove bgcolor as well
-
         items: [
           BottomNavigationBarItem(
             //backgroundColor: Colors.pink[400],
@@ -117,7 +134,7 @@ class _DashboardState extends State<Dashboard> {
           BottomNavigationBarItem(
             //backgroundColor: Colors.pink[400],
             icon: Icon(
-              Icons.notification_important_rounded,
+              Icons.notifications,
               size: 30,
             ),
             label: 'Notification',
