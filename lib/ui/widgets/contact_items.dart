@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ContactItem extends StatefulWidget {
@@ -36,11 +36,27 @@ class _ContactItemState extends State<ContactItem> {
                 icon: Icon(Icons.delete),
                 onPressed: () {
                   widget.ref.delete();
+                  deleteLocal();
                 },
                 color: Theme.of(context).errorColor),
           ],
         ),
       ),
     );
+  }
+
+  void deleteLocal() async {
+    // Code for deleting contacts from Local data
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    int count = pref.getInt('count');
+    for (int i = 1; i <= count; i++) {
+      String temp = pref.getString('num' + i.toString());
+      if (temp == widget.phone) {
+        pref.remove('num' + i.toString());
+        debugPrint(temp);
+      }
+    }
+    debugPrint(count.toString());
+    pref.setInt('count', --count);
   }
 }
