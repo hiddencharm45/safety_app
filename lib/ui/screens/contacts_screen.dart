@@ -5,11 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:safety_app/utils/contact_utils.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/clipshape_sos.dart';
-
 import '../widgets/responsive_ui.dart';
-
 import '../widgets/contact_items.dart';
 
 class ContactScreen extends StatefulWidget {
@@ -28,6 +26,7 @@ class _ContactScreenState extends State<ContactScreen> {
   double _pixelRatio;
   bool _large;
   bool _medium;
+  int count;
 
   // void _showContacts(BuildContext ctx) {
   //   showModalBottomSheet(
@@ -41,15 +40,13 @@ class _ContactScreenState extends State<ContactScreen> {
   //       });
   // }
 
-//
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   askContactsPermission();
+  // }
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-// // @override
-  // // void initState() {
-  // //   super.initState();
-
-  // //   askContactsPermission();
-  // // }
 
   Future askContactsPermission() async {
     final permission = await ContactUtils.getContactPermission();
@@ -58,13 +55,13 @@ class _ContactScreenState extends State<ContactScreen> {
         uploadContacts();
         break;
       case PermissionStatus.permanentlyDenied:
-        print("Permission denied");
+        print("Permission Denied");
         break;
       default:
         _scaffoldKey.currentState.showSnackBar(
           SnackBar(
             backgroundColor: Theme.of(context).errorColor,
-            content: Text('Please allow to "Upload Contacts"'),
+            content: Text('Please Allow to "Upload Contacts"'),
             duration: Duration(seconds: 3),
           ),
         );
@@ -73,18 +70,29 @@ class _ContactScreenState extends State<ContactScreen> {
   }
 
   Future uploadContacts() async {
+    // Having allowed the permissions for contacts, we are now retrieving it
     final contacts = await ContactsService.openDeviceContactPicker();
-    //We already have permissions for contact when we get to this page, so we
-    // are now just retrieving it
-
-    // Logic to send data to firestore//
+    // Storing contacts to firestore (collectionReference and user defined in the beginning as variable)
     final phoneNum = contacts.phones.map((e) => e.value).toList();
-    //collection ref and user defined in the beginning as variable
     collectionReference.doc(_user.uid).collection('allContacts').add({
       'contactName': contacts.givenName,
       'phone': phoneNum[0],
       'createdAt': Timestamp.now(),
     });
+    // Storing numbers as local data for offline SOS
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    try {
+      // Retrieves the number of contacts already stored in device
+      count = pref.getInt('count');
+      pref.setInt('count', ++count);
+    } catch (onError) {
+      // Sets the number of contact as 1 for first one
+      pref.setInt('count', 1);
+      count = 1;
+    }
+    // The naming of the variables is like num1, num2
+    pref.setString('num' + count.toString(), phoneNum[0]);
+    debugPrint(pref.getString('num' + count.toString()));
   }
 
   @override
@@ -100,12 +108,12 @@ class _ContactScreenState extends State<ContactScreen> {
       width: _width,
       margin: EdgeInsets.only(bottom: 5),
       child: Column(children: <Widget>[
-        //Opacity(opacity: 0.88, child: CustomAppBar()),
+        // Opacity(opacity: 0.88, child: CustomAppBar()),
         ClipShapeSos(_height, _width, _medium, _large),
 
-        //Text("Contact is this ok?"),
+        // Text("Contact is this ok?"),
         Container(
-          //color: Colors.black,
+          // color: Colors.black,
           height: _height * 0.45,
           child: Padding(
             padding: EdgeInsets.all(8),
@@ -133,7 +141,7 @@ class _ContactScreenState extends State<ContactScreen> {
                                 snapshot.data.docs[i]['phone'],
                                 snapshot.data.docs[i].reference,
                               ),
-                              //dummy data accepting
+                              // dummy data accepting
                               Divider(),
                             ],
                           ));
@@ -151,7 +159,7 @@ class _ContactScreenState extends State<ContactScreen> {
           ),
         ),
         Container(
-          //color: Colors.black,
+          // color: Colors.black,
           height: _height * 0.1,
           child: Align(
               alignment: Alignment.bottomCenter,

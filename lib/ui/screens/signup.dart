@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:safety_app/ui/screens/dashboard.dart';
 import '../widgets/custom_shape.dart';
@@ -125,24 +124,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 color: Colors.orange[200],
               )),
         ),
-//        Positioned(
-//          top: _height/8,
-//          left: _width/1.75,
-//          child: Container(
-//            alignment: Alignment.center,
-//            height: _height/23,
-//            padding: EdgeInsets.all(5),
-//            decoration: BoxDecoration(
-//              shape: BoxShape.circle,
-//              color:  Colors.orange[100],
-//            ),
-//            child: GestureDetector(
-//                onTap: (){
-//                  print('Adding photo');
-//                },
-//                child: Icon(Icons.add_a_photo, size: _large? 22: (_medium? 15: 13),)),
-//          ),
-//        ),
+        //  Positioned(
+        //    top: _height/8,
+        //    left: _width/1.75,
+        //    child: Container(
+        //      alignment: Alignment.center,
+        //      height: _height/23,
+        //      padding: EdgeInsets.all(5),
+        //      decoration: BoxDecoration(
+        //        shape: BoxShape.circle,
+        //        color:  Colors.orange[100],
+        //      ),
+        //      child: GestureDetector(
+        //          onTap: (){
+        //            print('Adding photo');
+        //          },
+        //          child: Icon(Icons.add_a_photo, size: _large? 22: (_medium? 15: 13),)),
+        //    ),
+        //  ),
       ],
     );
   }
@@ -154,7 +153,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       child: Form(
         child: Column(
           children: <Widget>[
-            phoneText(),
+            phoneTextFormField(),
             SizedBox(height: _height / 20.0),
             nameTextFormField(),
             SizedBox(height: _height / 60.0),
@@ -164,6 +163,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget phoneTextFormField() {
+    return CustomTextField(
+      keyboardType: TextInputType.text,
+      icon: Icons.phone_android,
+      bgColor: Colors.orange[100],
+      hint: "+91 " + widget.phone,
+      isReadOnly: true,
     );
   }
 
@@ -226,8 +235,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         //     content: Text('Fields Empty'),
         //   ));
         // }
-//here path can be set of user_id ND MAP can be altered a bit
-        //CollectionReference collectionReference =
+        // here path can be set of user_id ND MAP can be altered a bit
+        // CollectionReference collectionReference =
         FirebaseFirestore.instance
             .collection('users')
             .doc(widget.uid)
@@ -268,26 +277,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  // Widget lastNameTextFormField() {
-  //   return CustomTextField(
-  //     keyboardType: TextInputType.text,
-  //     icon: Icons.person,
-  //     hint: "Last Name",
-  //   );
-  // }
-
-  Widget phoneText() {
-    return Text(widget.phone,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24));
-  }
-
-  // Widget passwordTextFormField() {
-  //   return CustomTextField(
-  //     keyboardType: TextInputType.text,
-  //     obscureText: true,
-  //     icon: Icons.lock,
-  //     hint: "Password",
-  //   );
+  // Widget phoneText() {
+  //   return Text(widget.phone,
+  //       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24));
   // }
 
   // Widget infoTextRow() {

@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         //By adding stream provider tokens are being managed automatically
 
         home: StreamBuilder(
-          stream: FirebaseAuth.instance.onAuthStateChanged,
+          stream: FirebaseAuth.instance.authStateChanges(),
           builder: (ctx, userSnapshot) {
             if (userSnapshot.connectionState == ConnectionState.waiting) {
               //return SplashScreen();
