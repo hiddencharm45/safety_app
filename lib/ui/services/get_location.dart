@@ -22,7 +22,7 @@ class GetLocation {
     debugPrint(placemark[2].toString());
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString('location', placemark[2].toString());
-=======
+
 //     //debugPrint(placemark[2].toString());
 //     print(placemark);
 //     print(position);
