@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GetLocation {
   Future<Placemark> locationFetch() async {
@@ -17,9 +18,15 @@ class GetLocation {
       debugPrint("Yo" + onError);
       // App data to be accessed if location is unavailable
     });
-    //debugPrint(placemark[2].toString());
-    print(placemark);
-    print(position);
-    return placemark[2];
+// <<<<<<< main
+    debugPrint(placemark[2].toString());
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString('location', placemark[2].toString());
+=======
+//     //debugPrint(placemark[2].toString());
+//     print(placemark);
+//     print(position);
+// >>>>>>> main
+//     return placemark[2];
   }
 }

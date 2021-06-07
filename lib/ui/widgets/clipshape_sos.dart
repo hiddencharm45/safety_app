@@ -115,8 +115,7 @@ void _sendSOS() async {
   final telephony = Telephony.instance;
   SharedPreferences pref = await SharedPreferences.getInstance();
   // Retrieving contacts from Firestore
-  // final _user = FirebaseAuth.instance.currentUser;
-  // FirebaseFirestore.instance.collection('contact').doc(_user.uid).get().then((querySnapshot) {});
+
   try {
     int count = pref.getInt('count');
     if (count == 0) debugPrint("No recipients added");
@@ -124,7 +123,9 @@ void _sendSOS() async {
       telephony
           .sendSms(
               to: pref.getString('num' + i.toString()),
-              message: placemark.toString(),
+              message: (placemark == null)
+                  ? pref.getString('location')
+                  : placemark.toString(),
               isMultipart: true)
           .catchError((onError) {
         print("Yo" + onError);
@@ -132,13 +133,4 @@ void _sendSOS() async {
   } catch (e) {
     debugPrint("No recipients added");
   }
-
-  // opens the message app but doesn't send it automatically
-  // List<String> recipients = ['+917278419247', '+917278705235'];
-  // String result =
-  //     await sendSMS(message: placemark[2].toString(), recipients: recipients)
-  //         .catchError((onError) {
-  //   debugPrint(onError.toString());
-  // });
-  // debugPrint(result.toString());
 }
