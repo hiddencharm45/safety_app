@@ -18,15 +18,11 @@ class GetLocation {
       debugPrint("Yo" + onError);
       // App data to be accessed if location is unavailable
     });
-// <<<<<<< main
+
     debugPrint(placemark[2].toString());
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString('location', placemark[2].toString());
 
-//     //debugPrint(placemark[2].toString());
-//     print(placemark);
-//     print(position);
-// >>>>>>> main
-//     return placemark[2];
+    return placemark[2];
   }
 }

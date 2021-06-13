@@ -41,6 +41,10 @@ dependencies:
   telephony: ^0.0.9
   # workmanager: ^0.2.4
   shared_preferences: ^0.5.12+4
+  #flutter local notifications package
+  image_picker: ^0.6.5+3
+  firebase_storage: 4.0.0
+  firebase_messaging: ^6.0.13
   
   
   

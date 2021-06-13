@@ -1,10 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:safety_app/ui/screens/dashboard.dart';
+import 'package:safety_app/ui/widgets/user_image.dart';
 import '../widgets/custom_shape.dart';
 import '../widgets/customappbar.dart';
 import '../widgets/responsive_ui.dart';
 import '../widgets/textformfield.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
+import 'dart:io';
 
 class SignUpScreen extends StatefulWidget {
   static const routeName = '/signup';
@@ -27,6 +31,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
+  File _image;
+
+  void _pickedImage(File image) {
+    _image = image;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,15 +123,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
             color: Colors.white,
             shape: BoxShape.circle,
           ),
-          child: GestureDetector(
-              onTap: () {
-                print('Adding photo');
-              },
-              child: Icon(
-                Icons.add_a_photo,
-                size: _large ? 40 : (_medium ? 33 : 31),
-                color: Colors.orange[200],
-              )),
+          // child: GestureDetector(
+          //     onTap: () => UserImagePicker(_pickedImage),
+          //     child: Icon(
+          //       Icons.add_a_photo,
+          //       size: _large ? 40 : (_medium ? 33 : 31),
+          //       color: Colors.orange[200],
+          //     )),
+          child: UserImagePicker(_pickedImage),
         ),
         //  Positioned(
         //    top: _height/8,
@@ -224,26 +232,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       onPressed: () async {
-        // Map<String, dynamic> data = {
-        //   "uid": widget.uid,
-        //   "name": nameController.text.toString(),
-        //   "email": emailController.text.toString().trim(),
-        //   "phone": widget.phone
-        // };
-        // if (data['name'].isEmpty || data['email'].isEmpty) {
-        //   return Scaffold.of(context).showSnackBar(SnackBar(
-        //     content: Text('Fields Empty'),
-        //   ));
-        // }
-        // here path can be set of user_id ND MAP can be altered a bit
-        // CollectionReference collectionReference =
+        final ref = FirebaseStorage.instance.ref().child(widget.uid + '.jpg');
+        await ref.putFile(_image).onComplete;
+        final url = await ref.getDownloadURL();
         FirebaseFirestore.instance
             .collection('users')
             .doc(widget.uid)
             .set({
               "name": nameController.text.toString(),
               "email": emailController.text.toString().trim(),
-              "phone": widget.phone
+              "phone": widget.phone,
+              "image_url": url,
             })
             //collectionReference
             // .add(data)
@@ -276,86 +275,4 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-
-  // Widget phoneText() {
-  //   return Text(widget.phone,
-  //       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24));
-  // }
-
-  // Widget infoTextRow() {
-  //   return Container(
-  //     margin: EdgeInsets.only(top: _height / 40.0),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.center,
-  //       children: <Widget>[
-  //         Text(
-  //           "Or create using social media",
-  //           style: TextStyle(
-  //               fontWeight: FontWeight.w400,
-  //               fontSize: _large ? 12 : (_medium ? 11 : 10)),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  // Widget socialIconsRow() {
-  //   return Container(
-  //     margin: EdgeInsets.only(top: _height / 80.0),
-  //     child: Row(
-  //       mainAxisSize: MainAxisSize.min,
-  //       children: <Widget>[
-  //         CircleAvatar(
-  //           radius: 15,
-  //           backgroundImage: AssetImage("assets/images/googlelogo.png"),
-  //         ),
-  //         SizedBox(
-  //           width: 20,
-  //         ),
-  //         CircleAvatar(
-  //           radius: 15,
-  //           backgroundImage: AssetImage("assets/images/fblogo.jpg"),
-  //         ),
-  //         SizedBox(
-  //           width: 20,
-  //         ),
-  //         CircleAvatar(
-  //           radius: 15,
-  //           backgroundImage: AssetImage("assets/images/twitterlogo.jpg"),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  // Widget signInTextRow() {
-  //   return Container(
-  //     margin: EdgeInsets.only(top: _height / 20.0),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.center,
-  //       children: <Widget>[
-  //         Text(
-  //           "Already have an account?",
-  //           style: TextStyle(fontWeight: FontWeight.w400),
-  //         ),
-  //         SizedBox(
-  //           width: 5,
-  //         ),
-  //         GestureDetector(
-  //           onTap: () {
-  //             Navigator.of(context).pop(WelcomeScreen.routeName);
-  //             print("Routing to Sign up screen");
-  //           },
-  //           child: Text(
-  //             "Sign in",
-  //             style: TextStyle(
-  //                 fontWeight: FontWeight.w800,
-  //                 color: Colors.orange[200],
-  //                 fontSize: 19),
-  //           ),
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
 }

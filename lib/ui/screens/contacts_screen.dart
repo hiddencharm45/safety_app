@@ -117,7 +117,7 @@ class _ContactScreenState extends State<ContactScreen> {
           height: _height * 0.45,
           child: Padding(
             padding: EdgeInsets.all(8),
-
+//
             child: StreamBuilder(
                 stream: collectionReference
                     .doc(_user.uid)

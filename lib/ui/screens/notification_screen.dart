@@ -1,5 +1,6 @@
 //it is a tabs screen basically
 import 'package:flutter/material.dart';
+import 'package:safety_app/ui/widgets/notif_items.dart';
 
 //import 'package:safety_app/ui/signin.dart';
 import '../widgets/clipshape_sos.dart';
@@ -40,20 +41,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
             height: _height * 0.56,
             child: Padding(
               padding: EdgeInsets.all(8),
-              child: ListView.builder(
-                  itemCount: 18,
-                  itemBuilder: (_, i) => Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Container(
-                              child: Text("Notification Handled Here",
-                                  style: TextStyle(fontSize: 16)),
-                            ),
-                          ),
-                          Divider(),
-                        ],
-                      )),
+              child: Expanded(
+                child: ListView.builder(
+                    itemCount: 6, //will be made dynamic later when logic added
+                    itemBuilder: (_, i) => NotifItems("1")),
+              ),
             ),
           ),
         ]));

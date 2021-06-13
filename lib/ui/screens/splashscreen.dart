@@ -17,7 +17,7 @@ class SplashScreenState extends State<SplashScreen>
   Animation<double> animation;
 
   startTime() async {
-    var _duration = new Duration(seconds: 5);
+    var _duration = new Duration(seconds: 60);
     return new Timer(_duration, navigationPage);
     //takes duration for which timer will be on, and then what would be displayed if time completed
   }
@@ -46,6 +46,7 @@ class SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(48, 25, 52, 55),
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
