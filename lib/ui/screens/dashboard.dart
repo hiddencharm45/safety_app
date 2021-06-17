@@ -21,7 +21,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   initState() {
     _pages = [
-      {'page': NotificationScreen(), 'title': "Notification"},
+      {'page': NotificationScreen(), 'title': "Home"},
       {'page': ContactScreen(), 'title': "Contact"},
       {'page': UserProfile(), 'title': "Profile"},
       {'page': HomeScreen(), 'title': "Tips"},
@@ -109,10 +109,10 @@ class _DashboardState extends State<Dashboard> {
           BottomNavigationBarItem(
             //backgroundColor: Colors.pink[400],
             icon: Icon(
-              Icons.notifications,
+              Icons.home,
               size: 30,
             ),
-            label: 'Notification',
+            label: 'Home',
           ),
           BottomNavigationBarItem(
             //backgroundColor: Theme.of(context).primaryColor,

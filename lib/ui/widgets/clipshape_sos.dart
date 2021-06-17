@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:hardware_buttons/hardware_buttons.dart';
 import 'package:safety_app/ui/services/get_location.dart';
+import 'package:safety_app/ui/widgets/sms_format.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'custom_shape.dart';
 import 'package:telephony/telephony.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
-// import 'dart:async';
-// import 'package:hardware_buttons/hardware_buttons.dart' as HardwareButtons;
+import 'dart:async';
+import 'package:hardware_buttons/hardware_buttons.dart' as HardwareButtons;
 
 class ClipShapeSos extends StatefulWidget {
   final double height;
@@ -22,24 +24,24 @@ class ClipShapeSos extends StatefulWidget {
 }
 
 class _ClipShapeSosState extends State<ClipShapeSos> {
-  // StreamSubscription<HardwareButtons.VolumeButtonEvent> _volumeButtonSub;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _volumeButtonSub =
-  //       HardwareButtons.volumeButtonEvents.listen((VolumeButtonEvent event) {
-  //     setState(() {
-  //       print("THIS IS BUTTON EVENT: " + event.toString());
-  //     });
-  //     print(_volumeButtonSub.toString());
-  //   });
-  // }
+  StreamSubscription<HardwareButtons.VolumeButtonEvent> _volumeButtonSub;
+  @override
+  void initState() {
+    super.initState();
+    _volumeButtonSub =
+        HardwareButtons.volumeButtonEvents.listen((VolumeButtonEvent event) {
+      setState(() {
+        print("THIS IS BUTTON EVENT: " + event.toString());
+      });
+      print(_volumeButtonSub.toString());
+    });
+  }
 
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   _volumeButtonSub?.cancel();
-  // }
+  @override
+  void dispose() {
+    super.dispose();
+    _volumeButtonSub?.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,26 +113,35 @@ class _ClipShapeSosState extends State<ClipShapeSos> {
 
 void _sendSOS() async {
   Placemark placemark = await GetLocation().locationFetch();
-  // code below sends the location to the recipients as sms
-  final telephony = Telephony.instance;
+  debugPrint(placemark.toString());
   SharedPreferences pref = await SharedPreferences.getInstance();
-  // Retrieving contacts from Firestore
-
+  final telephony = Telephony.instance;
+  String formattedMessage;
+  (placemark == null)
+      ? formattedMessage =
+          await SMSFormat().smsFormat(placemark, pref.getString('location'))
+      : formattedMessage = await SMSFormat().smsFormat(placemark);
+  int count;
   try {
-    int count = pref.getInt('count');
-    if (count == 0) debugPrint("No recipients added");
-    for (int i = 1; i <= count; i++)
-      telephony
-          .sendSms(
-              to: pref.getString('num' + i.toString()),
-              message: (placemark == null)
-                  ? pref.getString('location')
-                  : placemark.toString(),
-              isMultipart: true)
-          .catchError((onError) {
-        print("Yo" + onError);
-      });
-  } catch (e) {
-    debugPrint("No recipients added");
+    count = pref.getInt('count');
+    debugPrint(count.toString());
+    if (count == null || count == 0)
+      debugPrint("No recipients added");
+    else {
+      for (int i = 1; i <= count; i++) {
+        debugPrint(pref.getString('num' + i.toString()));
+        telephony
+            .sendSms(
+          to: pref.getString('num' + i.toString()),
+          message: formattedMessage,
+        )
+            // isMultipart: true)
+            .catchError((onError) {
+          debugPrint("Yo" + onError.toString());
+        });
+      }
+    }
+  } catch (error) {
+    debugPrint("Yo Yo " + error.toString());
   }
 }

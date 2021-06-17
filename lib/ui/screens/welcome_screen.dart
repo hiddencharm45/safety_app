@@ -176,12 +176,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       margin: EdgeInsets.only(left: _width / 20, top: _height / 100),
       child: Row(
         children: <Widget>[
-          Text(
-            "Welcome Back!",
-            style: TextStyle(
-              color: Colors.grey[800],
-              fontWeight: FontWeight.bold,
-              fontSize: _large ? 50 : (_medium ? 40 : 30),
+          Center(
+            child: Text(
+              "Welcome!",
+              style: TextStyle(
+                color: Colors.grey[800],
+                fontWeight: FontWeight.bold,
+                fontSize: _large ? 50 : (_medium ? 40 : 30),
+              ),
             ),
           ),
         ],

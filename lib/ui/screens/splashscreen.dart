@@ -17,7 +17,7 @@ class SplashScreenState extends State<SplashScreen>
   Animation<double> animation;
 
   startTime() async {
-    var _duration = new Duration(seconds: 60);
+    var _duration = new Duration(seconds: 5);
     return new Timer(_duration, navigationPage);
     //takes duration for which timer will be on, and then what would be displayed if time completed
   }

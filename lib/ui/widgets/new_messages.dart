@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class NewMessege extends StatefulWidget {
+class NewMessage extends StatefulWidget {
   @override
-  _NewMessegeState createState() => _NewMessegeState();
+  _NewMessageState createState() => _NewMessageState();
 }
 
-class _NewMessegeState extends State<NewMessege> {
+class _NewMessageState extends State<NewMessage> {
   var _enteredMessege = '';
   final _controller = new TextEditingController();
   void _sendMessege() async {

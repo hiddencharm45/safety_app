@@ -81,18 +81,19 @@ class _ContactScreenState extends State<ContactScreen> {
     });
     // Storing numbers as local data for offline SOS
     SharedPreferences pref = await SharedPreferences.getInstance();
-    try {
-      // Retrieves the number of contacts already stored in device
-      count = pref.getInt('count');
-      pref.setInt('count', ++count);
-    } catch (onError) {
-      // Sets the number of contact as 1 for first one
-      pref.setInt('count', 1);
-      count = 1;
+    // Retrieves the number of existing contacts
+    count = pref.getInt('count');
+    if (count == null) {
+      // Sets the number of contact as 0 for the first one
+      pref.setInt('count', 0);
+      count = 0;
     }
+    count++;
     // The naming of the variables is like num1, num2
     pref.setString('num' + count.toString(), phoneNum[0]);
-    debugPrint(pref.getString('num' + count.toString()));
+    debugPrint("number added: " + pref.getString('num' + count.toString()));
+    pref.setInt('count', count);
+    debugPrint("count after adding: " + count.toString());
   }
 
   @override
