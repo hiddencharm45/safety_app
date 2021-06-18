@@ -5,6 +5,7 @@ import 'home_screen.dart';
 import 'contacts_screen.dart';
 import 'user_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:safety_app/ui/signin.dart';
 // import 'package:safety_app/ui/widgets/clipshape_sos.dart';
 //import '../widgets/responsive_ui.dart';
@@ -12,18 +13,47 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class Dashboard extends StatefulWidget {
   static const routeName = '/dashboard';
+  String name;
+  String email;
+  String message;
+
   @override
   _DashboardState createState() => _DashboardState();
 }
 
 class _DashboardState extends State<Dashboard> {
   List<Map<String, Object>> _pages;
+
+  void initializeValues() async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    String localMessageData = _pref.getString('message');
+    if (localMessageData == null) localMessageData = "Write additional message";
+
+    //retrieve name and email of user here & assign to name & email variables
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .get()
+        .then((value) {
+      debugPrint(value.data().toString());
+      widget.name = value.data()['name'];
+      widget.email = value.data()['email'];
+      widget.message = (value.data()['message'] == null)
+          ? localMessageData
+          : value.data()['message'];
+    });
+  }
+
   @override
   initState() {
+    initializeValues();
     _pages = [
       {'page': NotificationScreen(), 'title': "Home"},
       {'page': ContactScreen(), 'title': "Contact"},
-      {'page': UserProfile(), 'title': "Profile"},
+      {
+        'page': UserProfile(widget.name, widget.email, widget.message),
+        'title': "Profile"
+      },
       {'page': HomeScreen(), 'title': "Tips"},
     ];
     super.initState();

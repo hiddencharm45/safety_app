@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:safety_app/ui/widgets/textformfield.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,9 +11,12 @@ import '../widgets/responsive_ui.dart';
 
 class UserProfile extends StatefulWidget {
   static const routeName = '/dashboard';
-  String message;
-  String name;
-  String email;
+  final String message;
+  final String name;
+  final String email;
+
+  UserProfile(this.name, this.email, this.message);
+
   @override
   _UserProfileState createState() => _UserProfileState();
 }
@@ -36,24 +38,6 @@ class _UserProfileState extends State<UserProfile> {
   TextEditingController messageController = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
 
-  initState() {
-    initializeValues();
-    super.initState();
-  }
-
-  void initializeValues() async {
-    // reflect the value of message in the hint text, it behaves weirdly
-    SharedPreferences _pref = await SharedPreferences.getInstance();
-    widget.message = _pref.getString('message');
-    if (widget.message == null) widget.message = "Write additional message";
-
-    //retrieve name and email of user here & assign to name & email variables
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser.uid)
-        .get();
-  }
-
   @override
   Widget build(BuildContext context) {
     _height = MediaQuery.of(context).size.height;
@@ -61,6 +45,8 @@ class _UserProfileState extends State<UserProfile> {
     _pixelRatio = MediaQuery.of(context).devicePixelRatio;
     _large = ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
     _medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
+    // value of name, email n message is not reaching this page, hence the line below gives error
+    // debugPrint(widget.name + widget.email + widget.message);
     return Container(
         height: _height,
         width: _width,
@@ -222,30 +208,21 @@ class _UserProfileState extends State<UserProfile> {
     );
   }
 
-  // void inputMessage(value) async {
-  //   FirebaseFirestore.instance
-  //       .collection('users')
-  //       .doc(FirebaseAuth.instance.currentUser.uid)
-  //       .set({"message": value}).catchError((onError) {
-  //     debugPrint(onError);
-  //   });
-  // }
-
   Widget button(GlobalKey<ScaffoldState> _scaffoldkey) {
     return RaisedButton(
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       onPressed: () async {
-        FirebaseAuth.instance.currentUser.uid;
         SharedPreferences pref = await SharedPreferences.getInstance();
-        // inputMessage(messageController.text.toString().trim());
         pref.setString("message", messageController.text.toString());
+        FirebaseAuth.instance.currentUser.uid;
         FirebaseFirestore.instance
             .collection('users')
             .doc(FirebaseAuth.instance.currentUser.uid)
             .update({
           "name": nameController.text.toString(),
           "email": emailController.text.toString().trim(),
+          "message": messageController.text.toString().trim()
         }).catchError((e) {
           debugPrint(e);
           _scaffoldkey.currentState.showSnackBar(

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:hardware_buttons/hardware_buttons.dart';
+// import 'package:hardware_buttons/hardware_buttons.dart';
 import 'package:safety_app/ui/services/get_location.dart';
 import 'package:safety_app/ui/widgets/sms_format.dart';
+import 'package:safety_app/ui/widgets/sos_entry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'custom_shape.dart';
 import 'package:telephony/telephony.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:async';
-import 'package:hardware_buttons/hardware_buttons.dart' as HardwareButtons;
 
 class ClipShapeSos extends StatefulWidget {
   final double height;
@@ -24,25 +23,6 @@ class ClipShapeSos extends StatefulWidget {
 }
 
 class _ClipShapeSosState extends State<ClipShapeSos> {
-  StreamSubscription<HardwareButtons.VolumeButtonEvent> _volumeButtonSub;
-  @override
-  void initState() {
-    super.initState();
-    _volumeButtonSub =
-        HardwareButtons.volumeButtonEvents.listen((VolumeButtonEvent event) {
-      setState(() {
-        print("THIS IS BUTTON EVENT: " + event.toString());
-      });
-      print(_volumeButtonSub.toString());
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _volumeButtonSub?.cancel();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -113,6 +93,11 @@ class _ClipShapeSosState extends State<ClipShapeSos> {
 
 void _sendSOS() async {
   Placemark placemark = await GetLocation().locationFetch();
+  try {
+    SOSEntry().storeLocation(placemark);
+  } catch (e) {
+    debugPrint("Ghaplaaaaaaaa");
+  }
   debugPrint(placemark.toString());
   SharedPreferences pref = await SharedPreferences.getInstance();
   final telephony = Telephony.instance;

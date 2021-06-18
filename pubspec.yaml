@@ -35,8 +35,8 @@ dependencies:
   cloud_firestore: ^0.14.3
   geolocator: ^6.1.5
   geocoding: ^1.0.5
-  location: ^3.2.4
-  hardware_buttons: ^1.0.0
+  # location: ^3.2.4
+  # hardware_buttons: ^1.0.0
   flutter_sms: ^2.1.1
   telephony: ^0.0.9
   # workmanager: ^0.2.4
