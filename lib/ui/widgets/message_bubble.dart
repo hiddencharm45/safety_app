@@ -31,7 +31,7 @@ class MessegeBubble extends StatelessWidget {
               // constraints: BoxConstraints(
               //   maxWidth: 250,
               // ),
-              width: 140,
+              width: 160,
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
               margin: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
               child: Column(
@@ -41,23 +41,15 @@ class MessegeBubble extends StatelessWidget {
                   Text(
                     username,
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: isMe
-                            ? Colors.black
-                            : Theme.of(context)
-                                .accentTextTheme
-                                .headline1
-                                .color),
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
                   Text(
                     message,
                     style: TextStyle(
-                        color: isMe
-                            ? Colors.black
-                            : Theme.of(context)
-                                .accentTextTheme
-                                .headline1
-                                .color),
+                      color: Colors.black,
+                    ),
                     textAlign: isMe ? TextAlign.end : TextAlign.start,
                   ),
                 ],
@@ -68,8 +60,8 @@ class MessegeBubble extends StatelessWidget {
         //position widhets inisde of the stack, 3-d postioning simply by ordering, but 2-d
         Positioned(
             top: 0,
-            left: isMe ? null : 120,
-            right: isMe ? 120 : null,
+            left: isMe ? null : 140,
+            right: isMe ? 140 : null,
             child: CircleAvatar(
               backgroundImage: NetworkImage(userImage),
             )),
