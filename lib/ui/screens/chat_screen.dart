@@ -10,21 +10,6 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  // void initState() {
-  //   super.initState();
-  //   final fbm = FirebaseMessaging();
-  //   fbm.requestNotificationPermissions();
-  //   fbm.configure(onMessage: (msg) {
-  //     print(msg);
-  //     return;
-  //   }, onLaunch: (msg) {
-  //     print(msg);
-  //     return;
-  //   }, onResume: (msg) {
-  //     print(msg);
-  //     return;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {

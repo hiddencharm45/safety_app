@@ -87,7 +87,7 @@ class _DashboardState extends State<Dashboard> {
       body: _body,
       drawer: Drawer(
         child: Container(
-            padding: EdgeInsets.fromLTRB(5, 40, 5, 5),
+            padding: EdgeInsets.fromLTRB(12, 60, 5, 5),
             child: Column(
               children: [
                 FlatButton(

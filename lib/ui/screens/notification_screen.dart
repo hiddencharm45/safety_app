@@ -39,13 +39,17 @@ class _NotificationScreenState extends State<NotificationScreen> {
           Container(
             //color: Colors.black,
             height: _height * 0.56,
-            child: Padding(
-              padding: EdgeInsets.all(8),
-              child: Expanded(
-                child: ListView.builder(
-                    itemCount: 6, //will be made dynamic later when logic added
-                    itemBuilder: (_, i) => NotifItems("1")),
-              ),
+            padding: EdgeInsets.all(8),
+            // child: RaisedButton(
+            //   child: Text("Click-here"),
+            //   onPressed: () {
+            //     Navigator.of(context).pushNamed(ChatScreen.routeName);
+            //   },
+            // ),
+            child: Expanded(
+              child: ListView.builder(
+                  itemCount: 3, //will be made dynamic later when logic added
+                  itemBuilder: (_, i) => NotifItems("1")),
             ),
           ),
         ]));
