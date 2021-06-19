@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'message_bubble.dart';
 
-class Messeges extends StatefulWidget {
+class Messages extends StatefulWidget {
   @override
-  _MessegesState createState() => _MessegesState();
+  _MessagesState createState() => _MessagesState();
 }
 
-class _MessegesState extends State<Messeges> {
+class _MessagesState extends State<Messages> {
   final _user = FirebaseAuth.instance.currentUser;
   CollectionReference collectionReference =
       FirebaseFirestore.instance.collection('chat');
@@ -29,16 +27,14 @@ class _MessegesState extends State<Messeges> {
           return ListView.builder(
             reverse: true, //order messeges different
             itemCount: chatSnapshot.data.docs.length,
-            itemBuilder: (ctx, index) => MessegeBubble(
+            itemBuilder: (ctx, index) => MessageBubble(
               chatSnapshot.data.docs[index]['text'],
               chatSnapshot.data.docs[index]['userId'] == _user.uid,
-
               chatSnapshot.data.docs[index]['userImage'],
               chatSnapshot.data.docs[index]['username'],
               // key: ValueKey(chatSnapshot.data.docs[index].documentID),
             ),
-
-            //valuekey is a unique key and use some unique document id
+            // valuekey is a unique key and use some unique document id
           );
         });
   }

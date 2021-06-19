@@ -10,19 +10,27 @@ class GetLocation {
             desiredAccuracy: LocationAccuracy.high)
         .catchError((onError) {
       debugPrint("Yo" + onError);
+      return null;
     });
     // code below obtains address from coordinates
     List<Placemark> placemark =
         await placemarkFromCoordinates(position.latitude, position.longitude)
             .catchError((onError) {
       debugPrint("Yo" + onError);
-      // App data to be accessed if location is unavailable
+      return null;
     });
-
-    debugPrint(placemark[2].toString());
+    // code below is to be transferred to background location fetch
     SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString('location', placemark[2].toString());
-
+    pref.setString(
+        'location',
+        placemark[2].thoroughfare +
+            ", " +
+            placemark[2].subLocality +
+            ", " +
+            placemark[2].locality +
+            "-" +
+            placemark[2].postalCode);
+    debugPrint('location'.toString());
     return placemark[2];
   }
 }

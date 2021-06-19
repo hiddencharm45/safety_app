@@ -40,11 +40,13 @@ dependencies:
   flutter_sms: ^2.1.1
   telephony: ^0.0.9
   # workmanager: ^0.2.4
+  flutter_background_service: ^0.0.1+21
   shared_preferences: ^0.5.12+4
-  #flutter local notifications package
+  # flutter local notifications package
   image_picker: ^0.6.5+3
   firebase_storage: 4.0.0
   firebase_messaging: ^6.0.13
+  device_info: any
   
   
   

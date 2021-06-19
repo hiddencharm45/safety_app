@@ -4,11 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:safety_app/ui/screens/chat_screen.dart';
-
 import 'package:safety_app/ui/screens/otp_screen.dart';
-
 import 'package:safety_app/ui/services/auth.dart';
-//import 'package:safety_app/ui/services/auth.dart';
 import 'ui/screens/dashboard.dart';
 import 'ui/screens/welcome_screen.dart';
 import 'ui/screens/signup.dart';
@@ -16,7 +13,6 @@ import 'ui/screens/splashscreen.dart';
 import 'package:safety_app/ui/screens/welcome_screen.dart';
 import 'package:safety_app/ui/screens/signup.dart';
 import 'package:safety_app/ui/screens/splashscreen.dart';
-//import './ui/services/auth.dart';
 //import './ui/test.dart';
 
 //void main() => runApp(MyApp());
