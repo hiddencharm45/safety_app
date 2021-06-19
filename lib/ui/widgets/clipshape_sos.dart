@@ -96,7 +96,7 @@ void _sendSOS() async {
   try {
     SOSEntry().storeLocation(placemark);
   } catch (e) {
-    debugPrint("Ghaplaaaaaaaa");
+    debugPrint("Ghaplaaaaaaaaaaaaaaaa");
   }
   debugPrint(placemark.toString());
   SharedPreferences pref = await SharedPreferences.getInstance();
