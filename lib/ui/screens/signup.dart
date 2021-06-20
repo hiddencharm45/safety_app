@@ -243,6 +243,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               "email": emailController.text.toString().trim(),
               "phone": widget.phone,
               "image_url": url,
+              "message": "I'm in DANGER, Please help!!"
             })
             //collectionReference
             // .add(data)

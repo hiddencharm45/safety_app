@@ -46,12 +46,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
             //     Navigator.of(context).pushNamed(ChatScreen.routeName);
             //   },
             // ),
-            child: Expanded(
-              child: ListView.builder(
-                  itemCount: 3, //will be made dynamic later when logic added
-                  itemBuilder: (_, i) => NotifItems("1")),
+            //
+
+            child: ListView.builder(
+              itemBuilder: (_, i) => NotifItems("1"),
+              itemCount: 3,
             ),
-          ),
+          )
         ]));
   }
 }

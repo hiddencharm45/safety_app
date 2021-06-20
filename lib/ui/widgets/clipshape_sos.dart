@@ -101,7 +101,7 @@ void _sendSOS() async {
   debugPrint(placemark.toString());
   SharedPreferences pref = await SharedPreferences.getInstance();
   final telephony = Telephony.instance;
-  String formattedMessage;
+  String formattedMessage; //
   (placemark == null)
       ? formattedMessage =
           await SMSFormat().smsFormat(placemark, pref.getString('location'))

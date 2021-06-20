@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/responsive_ui.dart';
+//will copy and make a clone
 
 class CustomTextField extends StatelessWidget {
   final String hint;
@@ -9,8 +10,11 @@ class CustomTextField extends StatelessWidget {
   final IconData icon;
   final bool isReadOnly;
   final Color bgColor;
+  final String initialValue;
+  Function(String) onSaved;
 
   CustomTextField({
+    this.initialValue,
     this.hint,
     this.textEditingController,
     this.keyboardType,
@@ -18,6 +22,7 @@ class CustomTextField extends StatelessWidget {
     this.bgColor,
     this.isReadOnly = false,
     this.obscureText = false,
+    this.onSaved,
   });
 
   @override
@@ -31,9 +36,11 @@ class CustomTextField extends StatelessWidget {
       elevation: large ? 12 : (medium ? 10 : 8),
       color: bgColor,
       child: TextFormField(
+        initialValue: initialValue,
         readOnly: isReadOnly,
         controller: textEditingController,
         keyboardType: keyboardType,
+        onSaved: onSaved,
         cursorColor: Colors.orange[200],
         decoration: InputDecoration(
           prefixIcon: Icon(icon, color: Colors.black45, size: 20),
