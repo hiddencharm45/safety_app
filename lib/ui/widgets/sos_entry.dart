@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 
 class SOSEntry {
-  storeLocation(Placemark placemark) {
+  void storeLocation(Placemark placemark) {
     CollectionReference collectionRef =
         FirebaseFirestore.instance.collection('sos');
     int count;
@@ -18,7 +18,7 @@ class SOSEntry {
                   .doc(value.docs.first.id)
                   .collection('users')
                   .add({'uid': FirebaseAuth.instance.currentUser.uid})),
-              count = value.docs.first.data()['count'],
+              count = int.parse(value.docs.first.data()['count']),
             })
         .catchError((onError) {
       debugPrint("New Pincode Entered");
