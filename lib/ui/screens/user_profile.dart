@@ -210,7 +210,18 @@ class _UserProfileState extends State<UserProfile> {
                               "About Us",
                               style: TextStyle(color: Colors.black87),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  title: Text(" About Us"),
+                                  content: Text("This app is created by" +
+                                      " Ritu Jalan & Somyajit Nath" +
+                                      " as their final year project for " +
+                                      "engineering graduation course."),
+                                ),
+                              );
+                            },
                           ),
                           // SizedBox(width: 2),
                           FlatButton(
@@ -218,7 +229,15 @@ class _UserProfileState extends State<UserProfile> {
                               "FAQs",
                               style: TextStyle(color: Colors.black87),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  title: Text("FAQs"),
+                                  content: Text("This will be added later on"),
+                                ),
+                              );
+                            },
                           ),
                         ],
                       ),

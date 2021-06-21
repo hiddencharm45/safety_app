@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:safety_app/ui/screens/contacts_screen.dart';
+// import 'package:safety_app/ui/screens/contacts_screen.dart';
 // import 'package:hardware_buttons/hardware_buttons.dart';
 import 'package:safety_app/ui/services/get_location.dart';
 import 'package:safety_app/ui/widgets/sms_format.dart';
@@ -103,9 +103,8 @@ showAlertDialog(BuildContext context) {
 
   // Create AlertDialog
   AlertDialog alert = AlertDialog(
-    title: Text("Please Add Contacts to Proceed"),
-    content: Text(
-        "You have no Contacts added, Please First add contacts to send the message!\nThank you"),
+    title: Text("Add Contacts to Proceed"),
+    content: Text("Please add atleast one recipient to send the message"),
     actions: [
       noButton,
     ],
@@ -123,9 +122,20 @@ showAlertDialog(BuildContext context) {
 void _sendSOS(BuildContext context) async {
   Placemark placemark = await GetLocation().locationFetch();
   try {
-    SOSEntry().storeLocation(placemark);
+    if (await SOSEntry().storeLocation(placemark) > 5)
+      debugPrint("You Have Entered Red Zone");
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text("You've Entered Red Zone"),
+        content: Text("More than 5 users has recently sent" +
+            " out SOS alerts while" +
+            " being in this area!" +
+            "\n\nYou are advised to be careful"),
+      ),
+    );
   } catch (e) {
-    debugPrint("Ghaplaaaaaaaaaaaaaaaa");
+    debugPrint("Ghaplaaaaaaa" + e.toString());
   }
   debugPrint(placemark.toString());
   SharedPreferences pref = await SharedPreferences.getInstance();

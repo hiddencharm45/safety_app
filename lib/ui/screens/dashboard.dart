@@ -130,7 +130,7 @@ class _DashboardState extends State<Dashboard> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
         unselectedItemColor: Colors.black,
-        selectedItemColor: Colors.pink,
+        selectedItemColor: Colors.orange[400],
         currentIndex: _selectedPageIndex,
         //it tells that which item is selected
         type: BottomNavigationBarType

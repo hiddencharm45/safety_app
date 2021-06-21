@@ -4,34 +4,43 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 
 class SOSEntry {
-  void storeLocation(Placemark placemark) {
+  Future<int> storeLocation(Placemark placemark) async {
     CollectionReference collectionRef =
         FirebaseFirestore.instance.collection('sos');
-    int count;
+    int count = 0;
     collectionRef
         .where('postalCode', isEqualTo: placemark.postalCode)
         .get()
         .then((value) => {
-              collectionRef.doc(value.docs.first.id).update({
-                'count': (value.docs.first.data()['count'] + 1)
-              }).then((val) => collectionRef
-                  .doc(value.docs.first.id)
-                  .collection('users')
-                  .add({'uid': FirebaseAuth.instance.currentUser.uid})),
-              count = int.parse(value.docs.first.data()['count']),
+              if (value.docs.isNotEmpty)
+                {
+                  collectionRef.doc(value.docs.single.id).update({
+                    'count': (value.docs.single.data()['count'] + 1)
+                  }).then((x) => collectionRef
+                      .doc(value.docs.single.id)
+                      .collection('users')
+                      .add({'uid': FirebaseAuth.instance.currentUser.uid})),
+                  count = 1 + value.docs.single.data()['count'],
+                  if (count > 5) debugPrint("You've entered red zone")
+                }
+              else
+                {
+                  debugPrint("New Pincode Entered"),
+                  count = 1,
+                  collectionRef.add({
+                    'postalCode': placemark.postalCode,
+                    'count': 1,
+                    'lastSOS': DateTime.now()
+                  }).then((value) => collectionRef
+                      .doc(value.id)
+                      .collection('users')
+                      .add({'uid': FirebaseAuth.instance.currentUser.uid})),
+                }
             })
-        .catchError((onError) {
-      debugPrint("New Pincode Entered");
-      count = 1;
-      collectionRef.add({
-        'postalCode': placemark.postalCode,
-        'count': 1,
-        'lastSOS': DateTime.now()
-      }).then((value) => collectionRef
-          .doc(value.id)
-          .collection('users')
-          .add({'uid': FirebaseAuth.instance.currentUser.uid}));
-    });
-    if (count > 5) debugPrint("You've entered red zone");
+        .catchError((onError) => debugPrint(onError.toString()));
+    // if (count > 5) {
+    //   debugPrint("You've entered red zone");
+    // }
+    return count;
   }
 }

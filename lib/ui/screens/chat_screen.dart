@@ -10,13 +10,12 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Chat-Screen"),
-        backgroundColor: Colors.pink[300],
+        title: Text("Help-Group"),
+        backgroundColor: Colors.blue[300],
       ),
       body: Container(
         child: Column(
