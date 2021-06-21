@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:safety_app/ui/screens/chat_screen.dart';
+import 'package:safety_app/ui/screens/contacts_screen.dart';
 import 'package:safety_app/ui/screens/otp_screen.dart';
 import 'package:safety_app/ui/services/auth.dart';
 import 'ui/screens/dashboard.dart';

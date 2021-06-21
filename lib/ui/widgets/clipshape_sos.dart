@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:safety_app/ui/screens/contacts_screen.dart';
 // import 'package:hardware_buttons/hardware_buttons.dart';
 import 'package:safety_app/ui/services/get_location.dart';
 import 'package:safety_app/ui/widgets/sms_format.dart';
@@ -73,7 +74,7 @@ class _ClipShapeSosState extends State<ClipShapeSos> {
             child: RaisedButton(
               splashColor: Colors.black54,
               elevation: 20,
-              onPressed: _sendSOS,
+              onPressed: () => _sendSOS(context),
               shape: CircleBorder(),
               color: Colors.red,
               child: Text(
@@ -91,7 +92,35 @@ class _ClipShapeSosState extends State<ClipShapeSos> {
   }
 }
 
-void _sendSOS() async {
+showAlertDialog(BuildContext context) {
+  // Create button
+  Widget noButton = FlatButton(
+    child: Text("OK"),
+    onPressed: () {
+      Navigator.of(context).pop();
+    },
+  );
+
+  // Create AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Please Add Contacts to Proceed"),
+    content: Text(
+        "You have no Contacts added, Please First add contacts to send the message!\nThank you"),
+    actions: [
+      noButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+void _sendSOS(BuildContext context) async {
   Placemark placemark = await GetLocation().locationFetch();
   try {
     SOSEntry().storeLocation(placemark);
@@ -110,9 +139,10 @@ void _sendSOS() async {
   try {
     count = pref.getInt('count');
     debugPrint(count.toString());
-    if (count == null || count == 0)
+    if (count == null || count == 0) {
       debugPrint("No recipients added");
-    else {
+      showAlertDialog(context);
+    } else {
       for (int i = 1; i <= count; i++) {
         debugPrint(pref.getString('num' + i.toString()));
         telephony
