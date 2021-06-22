@@ -79,9 +79,6 @@ class _UserProfileState extends State<UserProfile> {
 
   Future<void> _saveForm() async {
     _form.currentState.save();
-    setState(() {
-      _isLoading = true;
-    });
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString("message", messageController.text.toString());
     FirebaseAuth.instance.currentUser.uid;
