@@ -3,12 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:safety_app/ui/widgets/textformfield.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../widgets/clipshape_sos.dart';
 import '../widgets/responsive_ui.dart';
 // import 'package:flutter/gestures.dart';
-// import 'package:safety_app/ui/signin.dart';
-// import '../ui/widgets/textformfield.dart';
 
 class UserProfile extends StatefulWidget {
   static const routeName = '/dashboard';
@@ -85,8 +82,8 @@ class _UserProfileState extends State<UserProfile> {
     setState(() {
       _isLoading = true;
     });
-    // SharedPreferences pref = await SharedPreferences.getInstance();
-    //     pref.setString("message", messageController.text.toString());
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString("message", messageController.text.toString());
     FirebaseAuth.instance.currentUser.uid;
     FirebaseFirestore.instance
         .collection('users')
@@ -109,8 +106,7 @@ class _UserProfileState extends State<UserProfile> {
     _pixelRatio = MediaQuery.of(context).devicePixelRatio;
     _large = ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
     _medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
-    // value of name, email n message is not reaching this page, hence the line below gives error
-    // debugPrint(widget.name + widget.email + widget.message);
+
     return _isLoading
         ? Center(
             child: CircularProgressIndicator(),
@@ -214,7 +210,18 @@ class _UserProfileState extends State<UserProfile> {
                               "About Us",
                               style: TextStyle(color: Colors.black87),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  title: Text(" About Us"),
+                                  content: Text("This app is created by" +
+                                      " Ritu Jalan & Somyajit Nath" +
+                                      " as their final year project for " +
+                                      "engineering graduation course."),
+                                ),
+                              );
+                            },
                           ),
                           // SizedBox(width: 2),
                           FlatButton(
@@ -222,7 +229,15 @@ class _UserProfileState extends State<UserProfile> {
                               "FAQs",
                               style: TextStyle(color: Colors.black87),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  title: Text("FAQs"),
+                                  content: Text("This will be added later on"),
+                                ),
+                              );
+                            },
                           ),
                         ],
                       ),
@@ -236,6 +251,7 @@ class _UserProfileState extends State<UserProfile> {
       margin: EdgeInsets.only(
           left: _width / 12.0, right: _width / 12.0, top: _width / 12.0),
       child: Form(
+        key: _form,
         child: Column(
           children: <Widget>[
             nameTextFormField(),
@@ -311,7 +327,6 @@ class _UserProfileState extends State<UserProfile> {
     return RaisedButton(
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-
       onPressed: _saveForm,
       // SharedPreferences pref = await SharedPreferences.getInstance();
       // pref.setString("message", messageController.text.toString());

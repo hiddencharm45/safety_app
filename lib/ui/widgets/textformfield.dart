@@ -11,7 +11,7 @@ class CustomTextField extends StatelessWidget {
   final bool isReadOnly;
   final Color bgColor;
   final String initialValue;
-  Function(String) onSaved;
+  final Function(String) onSaved;
 
   CustomTextField({
     this.initialValue,
