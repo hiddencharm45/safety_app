@@ -6,10 +6,6 @@ import 'contacts_screen.dart';
 import 'user_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'package:safety_app/ui/signin.dart';
-// import 'package:safety_app/ui/widgets/clipshape_sos.dart';
-//import '../widgets/responsive_ui.dart';
-//import '../ui/widgets/textformfield.dart';
 
 class Dashboard extends StatefulWidget {
   static const routeName = '/dashboard';
@@ -69,19 +65,10 @@ class _DashboardState extends State<Dashboard> {
 
   bool checkBoxValue = false;
   var _body;
-  //double _height;
-  //double _width;
-  //double _pixelRatio;
-  //bool _large;
-  //bool _medium;
+
   @override
   Widget build(BuildContext context) {
     _body = _pages[_selectedPageIndex]['page'];
-    //_height = MediaQuery.of(context).size.height;
-    //_width = MediaQuery.of(context).size.width;
-    //_pixelRatio = MediaQuery.of(context).devicePixelRatio;
-    //_large = ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
-    //_medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
 
     return Scaffold(
       body: _body,

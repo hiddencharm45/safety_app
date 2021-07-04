@@ -63,9 +63,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: _height / 35,
                 ),
                 button(_scaffoldkey),
-                //infoTextRow(),
-                //socialIconsRow(),
-                //signInTextRow(),
               ],
             ),
           ),
@@ -123,33 +120,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             color: Colors.white,
             shape: BoxShape.circle,
           ),
-          // child: GestureDetector(
-          //     onTap: () => UserImagePicker(_pickedImage),
-          //     child: Icon(
-          //       Icons.add_a_photo,
-          //       size: _large ? 40 : (_medium ? 33 : 31),
-          //       color: Colors.orange[200],
-          //     )),
           child: UserImagePicker(_pickedImage),
         ),
-        //  Positioned(
-        //    top: _height/8,
-        //    left: _width/1.75,
-        //    child: Container(
-        //      alignment: Alignment.center,
-        //      height: _height/23,
-        //      padding: EdgeInsets.all(5),
-        //      decoration: BoxDecoration(
-        //        shape: BoxShape.circle,
-        //        color:  Colors.orange[100],
-        //      ),
-        //      child: GestureDetector(
-        //          onTap: (){
-        //            print('Adding photo');
-        //          },
-        //          child: Icon(Icons.add_a_photo, size: _large? 22: (_medium? 15: 13),)),
-        //    ),
-        //  ),
       ],
     );
   }

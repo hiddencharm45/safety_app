@@ -7,6 +7,7 @@ class MessageBubble extends StatelessWidget {
   final String username;
 
   final Key key;
+  //How message bubble would be displayed- Design and LOGIC
 
   MessageBubble(this.message, this.isMe, this.userImage, this.username,
       {this.key});

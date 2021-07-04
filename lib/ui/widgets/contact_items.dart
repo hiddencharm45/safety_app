@@ -35,8 +35,8 @@ class _ContactItemState extends State<ContactItem> {
             IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: () {
-                  widget.ref.delete();
-                  deleteLocal();
+                  widget.ref.delete(); //deleting from the database
+                  deleteLocal(); //local data deleted
                 },
                 color: Theme.of(context).errorColor),
           ],
@@ -44,6 +44,8 @@ class _ContactItemState extends State<ContactItem> {
       ),
     );
   }
+
+  //Deleting from the local app data, if delete pressed
 
   void deleteLocal() async {
     // Code for deleting contacts from Local data

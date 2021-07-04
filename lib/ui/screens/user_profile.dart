@@ -51,20 +51,11 @@ class _UserProfileState extends State<UserProfile> {
         'email': email.toString(),
         'message': message.toString(),
       };
-      // _name = name.toString();
-      // _email = email.toString();
-      // _message = message.toString();
 
       _isLoading = false;
     });
   }
 
-  // Future<void> _updateForm() async {
-
-  // }
-
-  // final _form = GlobalKey<FormState>();
-  // bool _privacyMode = false;
   bool checkBoxValue = false;
   double _height;
   double _width;
@@ -117,83 +108,6 @@ class _UserProfileState extends State<UserProfile> {
                 // Opacity(opacity: 0.88, child: CustomAppBar()),
                 ClipShapeSos(_height, _width, _medium, _large),
                 form(),
-                // // // Container(
-                // // //   height: _height * 0.47,
-                // // //   // color: Colors.blue,
-                // // //   child: Column(
-                // // //     children: [
-                // // //       Card(
-                // // //         elevation: 3,
-                // // //         child: Container(
-                // // //           height: _height * 0.1,
-                // // //           width: _width * 0.9,
-                // // //           // color: Colors.blue,
-                // // //           child: ListTile(
-                // // //             title: Container(
-                // // //               width: _width * 0.6,
-                // // //               child: Row(
-                // // //                   mainAxisAlignment: MainAxisAlignment.start,
-                // // //                   children: <Widget>[
-                // // //                     Text(
-                // // //                       "Privacy Mode  ",
-                // // //                       style: TextStyle(
-                // // //                         fontSize: 22,
-                // // //                       ),
-                // // //                     ),
-                // // //                     GestureDetector(
-                // // //                         onTap: () {
-                // // //                           return showDialog(
-                // // //                             context: context,
-                // // //                             builder: (ctx) => AlertDialog(
-                // // //                               title: Text(" What is Privacy Mode"),
-                // // //                               content: Text(
-                // // //                                   "By enabling this the app will be able to access" +
-                // // //                                       "the Location,calling and SMS permissions to send" +
-                // // //                                       " and recieve message"),
-                // // //                             ),
-                // // //                           );
-                // // //                         },
-                // // //                         child: Icon(
-                // // //                           Icons.help,
-                // // //                           color: Colors.grey,
-                // // //                           size: 30,
-                // // //                         ))
-                // // //                   ]),
-                // // //             ),
-                // //             trailing: Switch(
-                // //               activeColor: Colors.pink,
-                // //               value:
-                // //                   _privacyMode, // reflected by what the user choose
-                // //               onChanged: (val) {
-                // //                 setState(() {
-                // //                   _privacyMode = val;
-                // //                 });
-                // //               },
-                // //             ),
-                // //           ),
-                // //         ),
-                // //       ),
-                //       Padding(
-                //         padding: const EdgeInsets.only(top: 20),
-                //         child: Card(
-                //           elevation: 3,
-                //           child: Container(
-                //             // height: _height * 0.30,
-                //             // width: _width * 0.9,
-                //             // color: Colors.red,
-                //             child: TextField(
-                //                 onChanged: inputMessage,
-                //                 decoration: InputDecoration(
-                //                   icon: Icon(Icons.edit),
-                //                   hintText: "Type a message",
-                //                 ),
-                //                 style: TextStyle(fontSize: 20)),
-                //           ),
-                //         ),
-                //       )
-                //     ],
-                //   ),
-                // ),
                 Container(
                     height: _height * 0.1,
                     padding: EdgeInsets.only(
@@ -284,16 +198,6 @@ class _UserProfileState extends State<UserProfile> {
         ),
       ),
     );
-    // return CustomTextField(
-    //   initialValue: _initValues['name'],
-    //   keyboardType: TextInputType.text,
-    //   icon: Icons.person,
-    //   hint: widget.name,
-    //   onSaved: (value) {
-    //     _name = value;
-    //   },
-    //   // textEditingController: nameController,
-    // );
   }
 
   Widget emailTextFormField() {
@@ -325,31 +229,6 @@ class _UserProfileState extends State<UserProfile> {
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       onPressed: _saveForm,
-      // SharedPreferences pref = await SharedPreferences.getInstance();
-      // pref.setString("message", messageController.text.toString());
-      // FirebaseAuth.instance.currentUser.uid;
-      // FirebaseFirestore.instance
-      //     .collection('users')
-      //     .doc(FirebaseAuth.instance.currentUser.uid)
-      //     .update({
-      //   "name": _name,
-      //   "email": _email,
-      //   "message": _message,
-      // }).catchError((e) {
-      //   debugPrint(e);
-      //   _scaffoldkey.currentState.showSnackBar(
-      //       SnackBar(content: Text('Error Updating Profile Info')));
-      // });
-      // print(_name);
-      // print(_message);
-      // print(_email);
-
-      // onPressed: () async {
-      //   final c = collectionReference.doc(_user.uid);
-      //   await c.get().then((DocumentSnapshot documentSnapshot) {
-      //     print(documentSnapshot['email']);
-      //   });
-      // },
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),
       child: Container(
@@ -371,28 +250,3 @@ class _UserProfileState extends State<UserProfile> {
     );
   }
 }
-
-// Switch(       activeColor: Colors.pink,
-//               value: _privacyMode, //reflected by what the user choose
-//               onChanged: (val) {
-//                 setState(
-//                   () {
-//                     _privacyMode = val;
-//                   },
-//                 );
-//               },
-//             ),
-//              FlatButton(
-//                         color: Colors.black,
-//                         onPressed: () {
-//                           return showDialog(
-//                             context: context,
-//                             builder: (ctx) => AlertDialog(
-//                               title: Text(" What is Privacy Mode"),
-//                               content: Text(
-//                      "By enabling this the app will be able to access the"+
-//                      "Location,calling and SMS permissions to send and receive message"),
-//                             ),
-//                           );
-//                         },
-//                         child: Text("hmmmm")),

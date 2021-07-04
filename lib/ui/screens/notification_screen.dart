@@ -34,20 +34,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
         width: _width,
         margin: EdgeInsets.only(bottom: 5),
         child: Column(children: <Widget>[
-          //Opacity(opacity: 0.88, child: CustomAppBar()),
           ClipShapeSos(_height, _width, _medium, _large),
           Container(
-            //color: Colors.black,
             height: _height * 0.56,
             padding: EdgeInsets.all(8),
-            // child: RaisedButton(
-            //   child: Text("Click-here"),
-            //   onPressed: () {
-            //     Navigator.of(context).pushNamed(ChatScreen.routeName);
-            //   },
-            // ),
-            //
-
             child: ListView.builder(
               itemBuilder: (_, i) => NotifItems("1"),
               itemCount: 3,

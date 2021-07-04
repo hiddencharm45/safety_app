@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
-// import 'package:safety_app/ui/screens/contacts_screen.dart';
-// import 'package:hardware_buttons/hardware_buttons.dart';
 import 'package:safety_app/ui/services/get_location.dart';
 import 'package:safety_app/ui/widgets/sms_format.dart';
 import 'package:safety_app/ui/widgets/sos_entry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'custom_shape.dart';
 import 'package:telephony/telephony.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 
+//The design on the top of the screen- custom made
 class ClipShapeSos extends StatefulWidget {
   final double height;
   final double width;
@@ -92,6 +89,7 @@ class _ClipShapeSosState extends State<ClipShapeSos> {
   }
 }
 
+//Alert message, when SOS is clicked with no contacts added
 showAlertDialog(BuildContext context) {
   // Create button
   Widget noButton = FlatButton(
@@ -135,7 +133,7 @@ void _sendSOS(BuildContext context) async {
       ),
     );
   } catch (e) {
-    debugPrint("Ghaplaaaaaaa" + e.toString());
+    debugPrint("Some Error" + e.toString());
   }
   debugPrint(placemark.toString());
   SharedPreferences pref = await SharedPreferences.getInstance();
@@ -162,11 +160,11 @@ void _sendSOS(BuildContext context) async {
         )
             // isMultipart: true)
             .catchError((onError) {
-          debugPrint("Yo" + onError.toString());
+          debugPrint("Error message" + onError.toString());
         });
       }
     }
   } catch (error) {
-    debugPrint("Yo Yo " + error.toString());
+    debugPrint("Error Message 2" + error.toString());
   }
 }

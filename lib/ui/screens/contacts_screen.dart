@@ -28,24 +28,6 @@ class _ContactScreenState extends State<ContactScreen> {
   bool _medium;
   int count;
 
-  // void _showContacts(BuildContext ctx) {
-  //   showModalBottomSheet(
-  //       context: ctx,
-  //       builder: (_) {
-  //         //print(_height *
-  //         // 0.5); //to give proper value in add contacts for now, later edit with media query
-  //         //print(_width * 0.45);
-  //         // print(_width * 0.1);
-  //         return AddContacts();
-  //       });
-  // }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   askContactsPermission();
-  // }
-
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Future askContactsPermission() async {
@@ -103,22 +85,17 @@ class _ContactScreenState extends State<ContactScreen> {
     _pixelRatio = MediaQuery.of(context).devicePixelRatio;
     _large = ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
     _medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
-    // final contacts = Provider.of<ContactProvider>(context);
+
     return Container(
       height: _height,
       width: _width,
       margin: EdgeInsets.only(bottom: 5),
       child: Column(children: <Widget>[
-        // Opacity(opacity: 0.88, child: CustomAppBar()),
         ClipShapeSos(_height, _width, _medium, _large),
-
-        // Text("Contact is this ok?"),
         Container(
-          // color: Colors.black,
           height: _height * 0.45,
           child: Padding(
             padding: EdgeInsets.all(8),
-//
             child: StreamBuilder(
                 stream: collectionReference
                     .doc(_user.uid)
@@ -131,9 +108,7 @@ class _ContactScreenState extends State<ContactScreen> {
                       child: CircularProgressIndicator(),
                     );
                   }
-
                   return ListView.builder(
-                      // reverse: true,
                       itemCount: snapshot.data.docs.length,
                       itemBuilder: (_, i) => Column(
                             children: [
@@ -142,25 +117,13 @@ class _ContactScreenState extends State<ContactScreen> {
                                 snapshot.data.docs[i]['phone'],
                                 snapshot.data.docs[i].reference,
                               ),
-                              // dummy data accepting
                               Divider(),
                             ],
                           ));
                 }),
-            // child: ListView.builder(
-            //     itemCount: contacts.items.length,
-            //     itemBuilder: (_, i) => Column(
-            //           children: [
-            //             ContactItem(contacts.items[i].id,
-            //                 contacts.items[i].name, contacts.items[i].number),
-            //             //dummy data accepting
-            //             Divider(),
-            //           ],
-            //         )),
           ),
         ),
         Container(
-          // color: Colors.black,
           height: _height * 0.1,
           child: Align(
               alignment: Alignment.bottomCenter,
@@ -177,7 +140,6 @@ class _ContactScreenState extends State<ContactScreen> {
                     size: 40,
                   ),
                 ),
-                // onPressed: () => _showContacts(context),
                 onPressed: askContactsPermission,
               )),
         ),

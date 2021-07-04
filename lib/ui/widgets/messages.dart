@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'message_bubble.dart';
+//Fetching the user messages from the database
 
 class Messages extends StatefulWidget {
   @override

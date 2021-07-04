@@ -2,10 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:safety_app/ui/widgets/news_items.dart';
 import '../dummy_data.dart';
-//import 'package:safety_app/ui/signin.dart';
+
 import '../widgets/clipshape_sos.dart';
 import '../widgets/responsive_ui.dart';
-//import '../ui/widgets/textformfield.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home-screen';

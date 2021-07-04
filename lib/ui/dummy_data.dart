@@ -341,7 +341,12 @@ It is necessary to know these and other laws in place to protect the interests o
     id: 'n8',
     title: 'HelpLine numbers',
     image: 'assets/images/wom8.png',
-    description: ''' Later... too tired...
+    description: '''Women's helpline (All India) Women in distress- 1091
+    Women helpline Domestic Abuse- 181
+    National Commison for Women - 011-26942369, 26944754
+    Student/Child Helpline- 1098
+    National Human Right Commison- 011-23385368/9810298900
+
       ''',
   ),
 ];
